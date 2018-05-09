@@ -5,15 +5,15 @@
 % matrix                matrix
 % method                the method of preporcessing
 %
-%   'dif1_h'            1st order difference in horizontal direction            (一阶差分 水平方向)
-%   'dif1_v'            1st order difference in vertical direction              (一阶差分 竖直方向)
-%   'dif2_h'            2nd order difference in horizontal direction            (二阶差分 水平方向)
-%   'dif2_v'            2nd order difference in vertical direction              (二阶差分 竖直方向)
-%   'abs'               absolute                                                (绝对值)
-%   'abs_dif1_h'        1st order absolute difference in horizontal direction   (绝对值 一阶差分 水平方向)
-%   'abs_dif1_v'        1st order absolute difference in vertical direction     (绝对值 一阶差分 竖直方向)
-%   'abs_dif2_h'        2nd order absolute difference in horizontal direction   (绝对值 二阶差分 水平方向)
-%   'abs_dif2_v'        2nd order absolute difference in vertical direction     (绝对值 二阶差分 竖直方向)
+%   'dif1_h'            1st order difference in horizontal direction
+%   'dif1_v'            1st order difference in vertical direction
+%   'dif2_h'            2nd order difference in horizontal direction
+%   'dif2_v'            2nd order difference in vertical direction
+%   'abs'               absolute
+%   'abs_dif1_h'        1st order absolute difference in horizontal direction
+%   'abs_dif1_v'        1st order absolute difference in vertical direction
+%   'abs_dif2_h'        2nd order absolute difference in horizontal direction
+%   'abs_dif2_v'        2nd order absolute difference in vertical direction
 % -----------------------------------------output
 % new_matrix            the processed matrix (处理后的矩阵)
 

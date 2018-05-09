@@ -1,12 +1,12 @@
-%% extract QMDCT coefficients in batch (批量提取mp3文件的QMDCT系数)
+%% extract QMDCT coefficients in batch
 % - QMDCTs = qmdct_extract_batch(audio_files_path, QMDCT_num, audio_nums, del_flag)
 % - Variable:
 % ------------------------------------------input
-% text_files_path       audio files path (QMDCT文件路径)
-% QMDCT_num             the number of QMDCT coeffcients, default is 576 (QMDCT系数个数, 默认为576)
-% audio_nums            the number of audio files to be processed (待提取的音频文件个数(默认为当前路径下的所有文件))
+% text_files_path       audio files path
+% QMDCT_num             the number of QMDCT coeffcients, default is 576
+% audio_nums            the number of audio files to be processed
 % -----------------------------------------output
-% QMDCTs                QMDCt matrix (生成的QMDCT系数矩阵), size(QMDCTs) = QMDCT_num * QMDCT_num * N
+% QMDCTs                QMDCt matrix, size(QMDCTs) = QMDCT_num * QMDCT_num * N
 % N is the number of files to be processed
 
 function QMDCTs = qmdct_extract_batch(text_files_path, QMDCT_num, text_nums)

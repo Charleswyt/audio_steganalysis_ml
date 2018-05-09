@@ -1,11 +1,11 @@
-%% Wang-Markov (块内块间Markov特征)
+%% Wang-Markov
 % - features = ren(matrix, T)
 % - Variable:
 % ------------------------------------------input
-% matrix                QMDCT matrix (QMDCT系数矩阵, 4*N*L, N为音频帧总数, L为每声道内QMDCT系数个数)
-% T                     threshold value (截断阈值T)
+% matrix                QMDCT matrix
+% T                     threshold value
 % -----------------------------------------output
-% feature               feature vector (特征向量)
+% feature               feature vector
 
 function features = wang(matrix, T)
 

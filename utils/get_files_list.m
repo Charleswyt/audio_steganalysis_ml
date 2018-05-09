@@ -1,12 +1,12 @@
-%% Get a list of filenames with extension(获取文件名列表(带扩展名))
+%% Get a list of filenames with extension
 % [files_list, files_num] = get_files_list(files_path, files_type)
 % - Variable：
 % ------------------------------------------input
-% files_path        The file path (待检索的文件路径)
-% file_type         The file type (待检索的文件类型 ( 'wav'、'mp3' ... )), default: mp3
+% files_path        The file path
+% file_type         The file type, default: mp3
 % ------------------------------------------input
-% files_list        文件名列表
-% files_num         文件个数
+% files_list        the file name list
+% files_num         the number of files
 
 function [files_list, files_num] = get_files_list(files_path, files_type)
 

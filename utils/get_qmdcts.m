@@ -1,12 +1,12 @@
-%% get QMDCT coefficients of audio file (测试)
+%% get QMDCT coefficients of audio file
 % - QMDCT = get_qmdcts(audio_file_path, frame_num, coeff_num)
 % - Variable:
 % ------------------------------------------input
-% audio_file_path       the path of audio file (待检测音频文件的路径)
-% frame_num             the number of frame, default is 50 (音频帧个数，默认为50)
-% coeff_num             the number of QMDCT coefficients in a row, default is 576 (每行所提QMDCT系数个数，默认为576)
+% audio_file_path       the path of audio file
+% frame_num             the number of frame, default is 50
+% coeff_num             the number of QMDCT coefficients in a row, default is 576
 % -----------------------------------------output
-% QMDCT                 QMDCT matrix (QMDCT系数矩阵)
+% QMDCT                 QMDCT matrix
 
 function QMDCT = get_qmdcts(audio_file_path, frame_num, coeff_num)
 
