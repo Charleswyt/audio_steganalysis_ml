@@ -3,8 +3,8 @@
 % - Variable:
 % ------------------------------------------input
 % text_files_path       audio files path (QMDCT文件路径)
-% QMDCT_num             the number of QMDCT coeffcients, default is 576 (QMDCT系数个数, 默认�?576)
-% audio_nums            the number of audio files to be processed (待提取的音频文件个数(默认为当前路径下的所有文�?))
+% QMDCT_num             the number of QMDCT coeffcients, default is 576 (QMDCT系数个数, 默认为576)
+% audio_nums            the number of audio files to be processed (待提取的音频文件个数(默认为当前路径下的所有文件))
 % -----------------------------------------output
 % QMDCTs                QMDCt matrix (生成的QMDCT系数矩阵), size(QMDCTs) = QMDCT_num * QMDCT_num * N
 % N is the number of files to be processed
