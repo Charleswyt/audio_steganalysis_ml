@@ -1,11 +1,11 @@
-%% 计算转移概率矩阵A1 -> A2, 截断阈值为T
+%% Calculate transition probability matrix with threshold T (A1 -> A2)
 % - F = getTPM(A1,A2,T)
-% - 变量说明：
+% - Variable:
 % ------------------------------------------input
-% A1                	转移前的矩阵A1
-% A2                	转移后的矩阵A2
+% A1                	matrix A1
+% A2                	matrix A2
 % -----------------------------------------output
-% F                     markov特征
+% F                     transition probability matrix in vector
 
 function F = getTPM(A1,A2,T)
 % get transition probability matrix A1 --> A2, range -T..T

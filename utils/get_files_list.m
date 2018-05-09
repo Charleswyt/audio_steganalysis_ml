@@ -10,7 +10,7 @@
 
 function [files_list, files_num] = get_files_list(files_path, files_type)
 
-if nargin == 1
+if ~exist('files_type', 'var') || isempty(files_type)
     files_type = 'mp3';
 end
 

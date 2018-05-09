@@ -19,27 +19,18 @@
 
 function [result, model, predict_label, ground_truth] = training(cover_feature, stego_feature, percent, n, model_file_name, is_rewrite)
 
-% 默认参数配置
-if nargin < 2
-    fprintf('请输出特征向量.\n');
-elseif nargin == 2
+% default parameters
+if ~exist('percent', 'var') || isempty(percent)
     percent = 0.8;
-    n = 10;
-    model_file_name = 'model.mat';
+end
+
+if ~exist('model_file_name', 'var') || isempty(model_file_name)
+    percent = 'model.mat';
+end
+
+if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
     is_rewrite = 'False';
-elseif nargin == 3
-    n = 10;
-    model_file_name = 'model.mat';
-    is_rewrite = 'False';
-    if percent >= 1
-        percent = 0.8;
-    end
-elseif nargin == 4
-    model_file_name = 'model.mat';
-    is_rewrite = 'False';
-else
-    is_rewrite = 'False';
-end 
+end
 
 sample_num = size(cover_feature, 1);                                        % the number of samples (样本个数)
 train_set_number = floor(percent * sample_num);                             % the number of training set (训练集大小)
