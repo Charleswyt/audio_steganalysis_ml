@@ -34,7 +34,7 @@ if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
 end
 
 sample_num = size(cover_feature, 1);                                        % the number of samples
-train_set_number = floor(percent * sample_num);                             % the number of training set
+train_set_number = 2 * floor(percent * sample_num);                         % the number of training set
 feature_dimension = size(cover_feature, 2);                                 % the dimension of feature
 
 cover_label = -ones(sample_num, 1);                                         % cover label
@@ -61,7 +61,7 @@ for i = 1 : n
     test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label
     
     %% SVM training
-    svm_params = '-s 0 -t 0 -g 10 -c 200';
+    svm_params = '-s 2 -t 0 -g 0.5 -c 0';
     model(i)   = libsvmtrain(train_label, train_data, svm_params);          %#ok<AGROW>
     
     %% SVM validation
