@@ -1,4 +1,5 @@
-feature_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature';
+feature_cover_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\cover';
+feature_stego_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\stego';
 cover_mat_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\mat\cover';
 stego_mat_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\mat\stego';
 feature_types = {'jin', 'ren', 'wang'};
@@ -9,28 +10,39 @@ if ~exist(feature_files_path, 'file')
 end
 
 %% cover
-cover_128 = load(fullfile(cover_mat_files_path, 'cover_128.mat'));cover_128 = cover_128.QMDCTs;
 for j = 1:length(feature_types)
-    feature_file_path = fullfile(feature_files_path, strcat(feature_types{j}, '_cover_128.mat'));
-    save_feature_file(cover_128, Ts(j), feature_types{j}, feature_file_path);
+    feature_file_path = fullfile(feature_cover_files_path, strcat(feature_types{j}, '_cover_128.mat'));
+    if ~exist(feature_file_path, 'file')
+        if isempty(cover_128)
+            cover_128 = load(fullfile(cover_mat_files_path, 'cover_128.mat'));cover_128 = cover_128.QMDCTs;
+        end
+        save_feature_file(cover_128, Ts(j), feature_types{j}, feature_file_path);
+    end
 end
 
-cover_320 = load(fullfile(cover_mat_files_path, 'cover_320.mat'));cover_320 = cover_320.QMDCTs;
 for j = 1:length(feature_types)
-    feature_file_path = fullfile(feature_files_path, strcat(feature_types{j}, '_cover_320.mat'));
-    save_feature_file(cover_320, Ts(j), feature_types{j}, feature_file_path);
+    feature_file_path = fullfile(feature_cover_files_path, strcat(feature_types{j}, '_cover_320.mat'));
+    if ~exist(feature_file_path, 'file')
+        if isempty(cover_128)
+            cover_320 = load(fullfile(cover_mat_files_path, 'cover_320.mat'));cover_320 = cover_320.QMDCTs;
+        end
+        save_feature_file(cover_320, Ts(j), feature_types{j}, feature_file_path);
+    end
 end
 
 %% stego
 [files_list, file_num] = get_files_list(stego_mat_files_path, 'mat');
-for i = 1:file_num
-    mat_file_path = fullfile(stego_mat_files_path, files_list{i});
-    QMDCT_matrix = load(mat_file_path);
-    QMDCT_matrix = QMDCT_matrix.QMDCTs;
-    
+for i = 1:file_num    
     for j = 1:length(feature_types)
-        feature_file_path = fullfile(feature_files_path, strcat(feature_types{j}, '_', files_list{i}));
-        save_feature_file(QMDCT_matrix, Ts(j), feature_types{j}, feature_file_path);
+        feature_file_path = fullfile(feature_stego_files_path, strcat(feature_types{j}, '_', files_list{i}));
+        if ~exist(feature_file_path, 'file')
+            if isempty(QMDCT_matrix)
+                mat_file_path = fullfile(stego_mat_files_path, files_list{i});
+                QMDCT_matrix = load(mat_file_path);
+                QMDCT_matrix = QMDCT_matrix.QMDCTs;
+            end
+            save_feature_file(QMDCT_matrix, Ts(j), feature_types{j}, feature_file_path);
+        end
     end
 end
 
