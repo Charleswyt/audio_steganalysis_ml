@@ -1,22 +1,25 @@
-%% 块间Markov特征
+%% Extract blocking Markov transfer probability matrix feature
 % - feature = get_block_markov(matrix, directions, block_size, T, order)
-% - 变量说明：
+% - Variable:
 % ------------------------------------------input
-% matrix            待处理矩阵
-% directions        计算方向
+% matrix            input data
+% directions        calculation direction
 %
-%   'h' - 水平方向 | 'v' - 竖直方向 | 'd' - 对角线方向 | 'm' - 副对角线方向
-%   'hv' - 水平竖直方向 | 'dm' - 对角线方向 | 'all' - 所有方向
+%   'h'   - horizontal | intra-frame
+%   'v'   - vertical   | inter-frame
+%   'd'   - diagonal
+%   'm'   - minor diagonal
+%   'hv'  - horizontal and vertical
+%   'dm'  - diagonal and minor diagonal
+%   'all' - all direction
 %
-% block_size        分块大小
-% T                 截断阈值
-% order             阶数
+% T                 threshold value
+% order             the orcer of Markov feature
 % -----------------------------------------output
-% feature           马尔可夫特征
+% feature           the extracted feature vector
 
 function F = get_block_markov(matrix, directions, block_size, T, order)
 
-%% 根据计算方向确定特征维度
 if strcmp(directions, 'all') == 1
     n = 4;
 elseif strcmp(directions, 'hv') == 1 || strcmp(directions, 'dm') == 1
@@ -28,7 +31,6 @@ else
     n = 0;
 end
 
-% F = zeros(n*(2*T+1));
 F = zeros(n*(2*T+1)^2,1);                                                   % inter-block part
 MODE = block_size^2;                
 
