@@ -1,21 +1,22 @@
-%% training (训练分类)
-% - [result, model] = training(cover_feature, stego_feature, percent, n)
-% - Variable：
+%% training
+% - [result, model, predict_label, ground_truth] = ...
+%           training(cover_feature, stego_feature, percent, n, model_file_name, is_rewrite)
+% - Variable:
 % ------------------------------------------input
-% cover_feature         the feature of cover samples (cover特征)
-% stego_feature         the feature of stego samples (stego特征)
-% percent               the percent of training set, default is 0.8 (训练集所占百分比, 默认为0.8)
-% n                     the times of cross-validation default is 10 (交叉验证次数, 默认为10)
+% cover_feature         the feature of cover samples
+% stego_feature         the feature of stego samples
+% percent               the percent of training set, default is 0.8
+% n                     the times of cross-validation default is 10
 % model_file_name       the file name of model
-% is_rewrite            whether to rewrite the model file (是否将当前模型文件重写, 默认关闭)
+% is_rewrite            whether to rewrite the model file
 % -----------------------------------------output
-% result                result (分类结果)
-%    FPR                False positive rate (虚警率)
-%    FNR                False negative rate (漏报率)
-%    ACC                Accuracy (准确率)
-% model                 model (训练模型)
-% predict_label         predictal label (预测标签)
-% ground_truth          real label (真实标签)
+% result                result
+%    FPR                False positive rate
+%    FNR                False negative rate
+%    ACC                Accuracy
+% model                 model
+% predict_label         predictal label
+% ground_truth          real label
 
 function [result, model, predict_label, ground_truth] = training(cover_feature, stego_feature, percent, n, model_file_name, is_rewrite)
 
@@ -32,38 +33,38 @@ if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
     is_rewrite = 'False';
 end
 
-sample_num = size(cover_feature, 1);                                        % the number of samples (样本个数)
-train_set_number = floor(percent * sample_num);                             % the number of training set (训练集大小)
-feature_dimension = size(cover_feature, 2);                                 % the dimension of feature (特征维度)
+sample_num = size(cover_feature, 1);                                        % the number of samples
+train_set_number = floor(percent * sample_num);                             % the number of training set
+feature_dimension = size(cover_feature, 2);                                 % the dimension of feature
 
-cover_label = -ones(sample_num, 1);                                         % cover label (cover样本标签)
-stego_label =  ones(sample_num, 1);                                         % steog label (stego样本标签)
-feature = [cover_feature; stego_feature];                                   % feature (训练数据特征)
-label = [cover_label; stego_label];                                         % label (训练数据标签)
-data = [feature, label];                                                    % data and label pair (用于svm的数据)
+cover_label = -ones(sample_num, 1);                                         % cover label
+stego_label =  ones(sample_num, 1);                                         % steog label
+feature = [cover_feature; stego_feature];                                   % feature
+label = [cover_label; stego_label];                                         % label
+data = [feature, label];                                                    % data and label pair
 
-FPR = zeros(1, n);                                                          % the initialization of FPR (虚警率初始化)
-FNR = zeros(1 ,n);                                                          % the initialization of FNR (漏报率初始化)
-ACC = zeros(1 ,n);                                                          % the initialization of ACC (准确率初始化)
+FPR = zeros(1, n);                                                          % the initialization of FPR
+FNR = zeros(1 ,n);                                                          % the initialization of FNR
+ACC = zeros(1 ,n);                                                          % the initialization of ACC
 
-predict_label = [];                                                         % the initialization of test label (测试集样本分类标签)
-ground_truth  = [];                                                         % the initialization of real label (测试集样本实际标签)
+predict_label = [];                                                         % the initialization of test label
+ground_truth  = [];                                                         % the initialization of real label
 
 for i = 1 : n
     
-    temp = shuffle(data);                                                   % the shuffle of training data (数据乱序)
+    temp = shuffle(data);                                                   % the shuffle of training data
     
-    %% 制备训练集 | 测试集
-    train_data  = temp(1:train_set_number, 1:feature_dimension);            % training data (训练集)
-    train_label = temp(1:train_set_number, feature_dimension+1);            % training label (训练集标签)
-    test_data   = temp(train_set_number+1:end, 1:feature_dimension);        % test data (测试集)
-    test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label (测试集标签)
+    %% make data
+    train_data  = temp(1:train_set_number, 1:feature_dimension);            % training data
+    train_label = temp(1:train_set_number, feature_dimension+1);            % training label
+    test_data   = temp(train_set_number+1:end, 1:feature_dimension);        % test data
+    test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label
     
-    %% SVM训练
+    %% SVM training
     svm_params = '-s 0 -t 0 -g 10 -c 200';
     model(i)   = libsvmtrain(train_label, train_data, svm_params);          %#ok<AGROW>
     
-    %% SVM预测
+    %% SVM validation
     predict = libsvmpredict(test_label, test_data, model(i));
     predict_label = [predict_label; predict];                               %#ok<AGROW>
     ground_truth  = [ground_truth; test_label];                             %#ok<AGROW>
