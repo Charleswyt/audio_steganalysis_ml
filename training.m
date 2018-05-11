@@ -8,6 +8,8 @@
 % percent               the percent of training set, default is 0.8
 % n                     the times of cross-validation default is 10
 % model_file_name       the file name of model
+% svm_params            svm parameters for training
+% seek_best_paarams     whether seek the optimal parameters for training
 % is_rewrite            whether to rewrite the model file
 % -----------------------------------------output
 % result                result
@@ -18,7 +20,8 @@
 % predict_label         predictal label
 % ground_truth          real label
 
-function [result, model, predict_label, ground_truth] = training(cover_feature, stego_feature, percent, n, model_file_name, is_rewrite)
+function [result, model, predict_label, ground_truth] ...
+    = training(cover_feature, stego_feature, percent, n, model_file_name, seek_best_params, svm_params, is_rewrite)
 
 % default parameters
 if ~exist('percent', 'var') || isempty(percent)
@@ -31,6 +34,19 @@ end
 
 if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
     is_rewrite = 'False';
+end
+
+if ~exist('seek_best_params', 'var') || isempty(seek_best_params)
+    seek_best_params = 'False';
+end
+
+if ~exist('svm_params', 'var') || isempty(svm_params)
+    if strcmp(seek_best_params, 'False')
+        svm_params = '-s 0 -t 0 -c 256 -g 0.03';
+    elseif strcmp(seek_best_params, 'True')
+        [~, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
+        svm_params = strcat('-s 0 -t 0 -c ', num2str(bestc), ' -g ', num2str(bestg));
+    end
 end
 
 sample_num = size(cover_feature, 1);                                        % the number of samples
@@ -61,8 +77,7 @@ for i = 1 : n
     test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label
     
     %% SVM training
-    svm_params = '-s 2 -t 0 -g 0.5 -c 0';
-    model(i)   = libsvmtrain(train_label, train_data, svm_params);          %#ok<AGROW>
+    model(i)    = libsvmtrain(train_label, train_data, svm_params);         %#ok<AGROW>
     
     %% SVM validation
     predict = libsvmpredict(test_label, test_data, model(i));
@@ -97,7 +112,7 @@ result.ACC = mean(ACC);
 save(model_file_name, 'model');
 
 fprintf('---------------------------------------------------\n');
-fprintf('Training set: %d%% Test set: %d%% %d-cross validtion\n', percent*100, 100-percent*100, n);
+fprintf('Training set: %d%%, Test set: %d%%, %d cross validtion\n', percent*100, 100-percent*100, n);
 fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR * 100, result.FNR * 100, result.ACC * 100);
 fprintf('The model file is saved as "%s"\n', model_file_name);
 fprintf('Current time: %s\n', datestr(now, 0));

@@ -1,4 +1,4 @@
-function [bestacc,bestc,bestg] = SVMcg(train_label,train,cmin,cmax,gmin,gmax,v,cstep,gstep,accstep)
+function [bestacc,best_t,best_c,best_g] = SVMcg(train_label,train,cmin,cmax,gmin,gmax,v,cstep,gstep,accstep)
 %SVMcg cross validation by faruto
 % [bestacc,bestc,bestg] = SVMcg(train_label,train,cmin,cmax,gmin,gmax,v,cstep,gstep,accstep)
 %
@@ -68,26 +68,30 @@ end
 [m,n] = size(X);
 cg = zeros(m,n);
 %% record acc with different c & g,and find the bestacc with the smallest c
-bestc = 0;
-bestg = 0;
+best_c = 0;
+best_g = 0;
 bestacc = 0;
 basenum = 2;
-for i = 1:m
-    for j = 1:n
-        cmd = ['-s 0 -t 2 ', '-v ',num2str(v),' -c ',num2str( basenum^X(i,j) ),' -g ',num2str( basenum^Y(i,j) )];
-        cg(i,j) = libsvmtrain(train_label, train, cmd);
+for t = 0:2
+    for i = 1:m
+        for j = 1:n
+            cmd = ['-s 0 -t ', num2str(t),  ' -v ',num2str(v),' -c ',num2str( basenum^X(i,j) ),' -g ',num2str( basenum^Y(i,j) )];
+            cg(i,j) = libsvmtrain(train_label, train, cmd);
 
-        if cg(i,j) > bestacc
-            bestacc = cg(i,j);
-            bestc = basenum^X(i,j);
-            bestg = basenum^Y(i,j);
-        end
-        if ( cg(i,j) == bestacc && bestc > basenum^X(i,j) )
-            bestacc = cg(i,j);
-            bestc = basenum^X(i,j);
-            bestg = basenum^Y(i,j);
-        end
+            if cg(i,j) > bestacc
+                bestacc = cg(i,j);
+                best_t = t;
+                best_c = basenum^X(i,j);
+                best_g = basenum^Y(i,j);
+            end
+            if ( cg(i,j) == bestacc && best_c > basenum^X(i,j) )
+                bestacc = cg(i,j);
+                best_t = t;
+                best_c = basenum^X(i,j);
+                best_g = basenum^Y(i,j);
+            end
 
+        end
     end
 end
 %% to draw the acc with different c & g
