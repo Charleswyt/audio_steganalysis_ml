@@ -1,3 +1,5 @@
+%% load QMDCT coefficients into the memory from txt file
+
 prefixs = {'acs_t_2_w_2', 'acs_t_3_w_2', 'eecs_w_2', 'yan_w_2'};
 bitrates = {'128', '320'};
 embedding_rates = {'0.1', '0.3', '0.5', '0.8', '1.0'};

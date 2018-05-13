@@ -1,3 +1,5 @@
+%% feature extraction script
+
 feature_cover_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\cover';
 feature_stego_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\stego';
 cover_mat_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\mat\cover';
