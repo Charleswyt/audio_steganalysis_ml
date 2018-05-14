@@ -32,29 +32,28 @@ if ~exist('order', 'var') || isempty(order)
     order = 1;
 end
 
+
+Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
+
 %% all direction
 if strcmp(directions, 'all') == 1
     feature = [];
-    %% horizontal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
+    %% horizontal (2T+1)^2 features        
     A1 = Ad(:,1:end-order);
     A2 = Ad(:,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
     
     %% vertical (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,:);
     A2 = Ad(2:end,:);
     feature = [feature;getTPM(A1,A2,T)];
 
     %% diagonal (2T+1)^2 feature
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,1:end-order);
     A2 = Ad(1+order:end,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
     
     %% minor diagonal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1+order:end,1:end-order);
     A2 = Ad(1:end-order,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
@@ -64,13 +63,11 @@ end
 if strcmp(directions, 'hv') == 1
     feature = [];
     %% horizontal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(:,1:end-order);
     A2 = Ad(:,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
     
     %% vertical (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,:);
     A2 = Ad(1+order:end,:);
     feature = [feature;getTPM(A1,A2,T)];
@@ -80,13 +77,11 @@ end
 if strcmp(directions, 'dm') == 1
     feature = [];
     %% diagonal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,1:end-order);
     A2 = Ad(1+order:end,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
     
     %% minor diagonal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1+order:end,1:end-order);
     A2 = Ad(1:end-order,1+order:end);
     feature = [feature;getTPM(A1,A2,T)];
@@ -96,7 +91,6 @@ end
 %% horizontal direction
 if strcmp(directions, 'h') == 1
     %% horizontal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(:,1:end-order);
     A2 = Ad(:,1+order:end);
     feature = getTPM(A1,A2,T);
@@ -105,7 +99,6 @@ end
 %% vertical direction
 if strcmp(directions,'v') == 1
     %% vertical (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,:);
     A2 = Ad(1+order:end,:);
     feature = getTPM(A1,A2,T);
@@ -114,7 +107,6 @@ end
 %% diagonal direction
 if strcmp(directions, 'd') == 1
     %% diagonal (2T+1)^2 feature
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1:end-order,1:end-order);
     A2 = Ad(1+order:end,1+order:end);
     feature = getTPM(A1,A2,T);
@@ -123,7 +115,6 @@ end
 %% minor diagonal direction
 if strcmp(directions, 'm') == 1
     %% minor diagonal (2T+1)^2 features
-    Ad = max(min(matrix,T),-T);                 % truncate to [-T,T]
     A1 = Ad(1+order:end,1:end-order);
     A2 = Ad(1:end-order,1+order:end);
     feature = getTPM(A1,A2,T);
