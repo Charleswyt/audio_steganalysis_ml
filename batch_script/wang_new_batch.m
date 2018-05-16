@@ -1,4 +1,4 @@
-%% wang feature extraction in batch
+%% wang new feature extraction in batch
 %
 % - Variable:
 % ------------------------------------------input
@@ -9,7 +9,7 @@
 % -----------------------------------------output
 % features          feature dimension
 
-function features = wang_batch(matrixs, T, numbers)
+function features = wang_new_batch(matrixs, T, numbers)
 
 total_number = size(matrixs, 3);
 
@@ -25,9 +25,9 @@ start_time = tic;
 
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = wang(matrix, T);                %#ok<AGROW>
+    features(i,:) = wang_new(matrix, T);                                    %#ok<AGROW>
 end
 
 end_time = toc(start_time);
 
-fprintf('Wang feature extraction completes, T = %d, runtime: %.2fs\n', T, end_time);
+fprintf('Wang new feature extraction completes, T = %d, runtime: %.2fs\n', T, end_time);

@@ -28,8 +28,12 @@ if ~exist('percent', 'var') || isempty(percent)
     percent = 0.8;
 end
 
+if ~exist('n', 'var') || isempty(n)
+    n = 0.8;
+end
+
 if ~exist('model_file_name', 'var') || isempty(model_file_name)
-    percent = 'model.mat';
+    model_file_name = 'model.mat';
 end
 
 if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
@@ -42,7 +46,7 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 0 -t 0 -c 256 -g 0.03';
+        svm_params = '-s 0 -t 0 -c 9.7656e-04 -g 0.0313';
     elseif strcmp(seek_best_params, 'True')
         [~, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
         svm_params = strcat('-s 0 -t 0 -c ', num2str(bestc), ' -g ', num2str(bestg));
@@ -69,7 +73,7 @@ ground_truth  = [];                                                         % th
 for i = 1 : n
     
     temp = shuffle(data);                                                   % the shuffle of training data
-    
+
     %% make data
     train_data  = temp(1:train_set_number, 1:feature_dimension);            % training data
     train_label = temp(1:train_set_number, feature_dimension+1);            % training label

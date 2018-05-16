@@ -18,6 +18,5 @@ for i = -T:T
         F(i+T+1, j+T+1) = nnz(FF==j) / dn(i+T+1);
     end
 end
-end
 
 F = F(:);

@@ -2,7 +2,7 @@
 feature_cover_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\cover';
 feature_stego_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\feature\stego';
 bitrates = {'128', '320'};
-feature_types = {'jin', 'ren', 'wang'};
+feature_types = {'jin', 'ren', 'wang', 'wang_new'};
 
 % cover
 for i = 1:length(feature_types)

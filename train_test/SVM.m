@@ -35,7 +35,7 @@
 %  wi   the weight of c, default is 1
 
 function [best_acc, best_t, best_c, best_g] = ...
-    SVM(train_label, train, c_min, c_max, g_min, g_max, v, c_step, g_step)
+    SVM(train_label, train, c_min, c_max, g_min, g_max, v, c_step, g_step, t_flag)
 
 %% default
 if ~exist('v', 'var') || isempty(v) v = 3; end                              %#ok<SEPEX>
@@ -45,19 +45,22 @@ if ~exist('g_min', 'var') || isempty(g_min) g_min = -5; end                 %#ok
 if ~exist('c_min', 'var') || isempty(c_min) c_min = -5; end                 %#ok<SEPEX>
 if ~exist('c_step', 'var') || isempty(c_step) c_step = 1; end               %#ok<SEPEX>
 if ~exist('g_step', 'var') || isempty(g_step) g_step = 1; end               %#ok<SEPEX>
+if ~exist('t_flag', 'var') || isempty(t_flag) t_flag = 'False'; end         %#ok<SEPEX>
 
 %% X:c Y:g cg:acc
 [X, Y] = meshgrid(c_min:c_step:c_max, g_min:g_step:g_max);
 [m, n] = size(X);
-cg = zeros(4, m, n);
+
+if strcmp(t_flag, 'True') T = [0, 2]; end                                   %#ok<SEPEX>
+if strcmp(t_flag, 'False') T = 0; end                                       %#ok<SEPEX>
 
 %% record acc with different c & g,and find the best acc with the smallest c
 [best_c, best_g, best_acc, base_num] = deal(0, 0, 0, 2);
-for t = 0:3
+for t = T
     for i = 1:m
         for j = 1:n
             svm_params = ['-s 0 -t ',num2str(t),' -v ',num2str(v),' -c ',num2str(base_num^X(i,j)),' -g ',num2str(base_num^Y(i,j))];
-            cg(t+1,i,j) = libsvmtrain(train_label, train, svm_params);
+            cg(t+1,i,j) = libsvmtrain(train_label, train, svm_params);      %#ok<AGROW>
             if (cg(t+1,i,j) > best_acc) || (cg(t+1,i,j) == best_acc && best_c > base_num^X(i,j))
                 [best_acc, best_t, best_c, best_g] = deal(cg(t+1,i,j), t, base_num^X(i,j), base_num^Y(i,j));
             end
