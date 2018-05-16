@@ -1,6 +1,10 @@
 %% Get the best parameters of 
 function [bestacc,best_t,bestc,bestg] = get_best_params(cover_feature,stego_feature,percent, t_flag)
 
+if ~exist('t_flag', 'var') || isempty(t_flag)
+    t_flag = 'False';
+end
+
 data = [cover_feature;stego_feature];
 cover_label = zeros(size(cover_feature,1),1);
 stego_label = ones(size(stego_feature,1),1);
