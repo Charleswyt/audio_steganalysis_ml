@@ -48,7 +48,7 @@ if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
         svm_params = '-s 0 -t 0 -c 512 -g 0.0313';
     elseif strcmp(seek_best_params, 'True')
-        [~, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
+        [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
     end
 end
@@ -114,6 +114,7 @@ result.FPR = mean(FPR);
 result.FNR = mean(FNR);
 result.ACC = mean(ACC);
 result.svm_params = svm_params;
+result.best_acc = best_acc;
 save(model_file_name, 'model');
 
 fprintf('---------------------------------------------------\n');
