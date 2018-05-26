@@ -1,43 +1,68 @@
 %% load QMDCT coefficients into the memory from txt file
+% name_format:  cover_128
+%               EECS_B_128_W_6_T_0_ER_10
 
-prefixs = {'acs_t_2_w_2', 'acs_t_3_w_2', 'eecs_w_2', 'yan_w_2'};
-bitrates = {'128', '320'};
-embedding_rates = {'0.1', '0.3', '0.5', '0.8', '1.0'};
+[QMDCT_num, files_num] = deal(576, 1000);
+steg_algorithms = {'ACS', 'EECS', 'HCM', 'AHCM'};
+bitrates = {'128', '192', '256', '320'};
+capacities = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'};
+thresholds = {'0', '1', '2', '3', '4'};
+embedding_rates = {'01', '03', '05', '08', '10'};
 
 root_path = 'C:\Users\Charles_CatKing\Desktop\QMDCT';
 mat_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\mat';
 
-if ~exist(mat_files_path, 'file')
-    mkdir(mat_files_path)
-end
+mat_cover_files_path = fullfile(mat_files_path, 'cover');
+mat_stego_files_path = fullfile(mat_files_path, 'stego');
 
-QMDCT_num = 576;
-text_nums = 1000;
+if ~exist(root_path, 'file')
+    fprintf('The QMDCT files floder does not exist.\n');
+else
+    if ~exist(mat_cover_files_path, 'file')
+        mkdir(mat_cover_files_path)
+    end
+    
+    if ~exist(mat_stego_files_path, 'file')
+        mkdir(mat_stego_files_path)
+    end
 
-for i = 1:length(prefixs)
-    for j = 1:length(bitrates)
-        for k = 1:length(embedding_rates)
-            file_name = strcat(prefixs{i}, '_', bitrates{j}, '_', embedding_rate{k});
-            file_path = fullfile(root_path, file_name);
-            mat_file_path = fullfile(mat_files_path, strcat(file_name, '.mat'));
+%% cover
+    for i = 1:length(bitrates)
+        file_name = strcat('cover_', bitrates{i});
+        file_path = fullfile(root_path, file_name);
+        if ~exist(file_path, 'file')
+            continue;
+        else
+            mat_file_path = fullfile(mat_cover_files_path, strcat(file_name, '.mat'));
+            QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, files_num);
             if ~exist(mat_file_path, 'file')
-                QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, text_nums);  %#ok<NASGU>
                 save(mat_file_path, 'QMDCTs');
             end
         end
     end
-end
 
-file_path = fullfile(root_path, 'cover_128');
-mat_file_path = fullfile(mat_files_path, strcat('cover_128', '.mat'));
-QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, text_nums);                %#ok<NASGU>
-if ~exist(mat_file_path, 'file')
-    save(mat_file_path, 'QMDCTs');
-end
-
-file_path = fullfile(root_path, 'cover_320');
-mat_file_path = fullfile(mat_files_path, strcat('cover_320', '.mat'));
-QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, text_nums);
-if ~exist(mat_file_path, 'file')
-    save(mat_file_path, 'QMDCTs');
+%% stego
+    for i = 1:length(steg_algorithms)
+        for j = 1:length(bitrates)
+            for m = 1:length(capacities)
+                for n = 1:length(thresholds)
+                    for k = 1:length(embedding_rates)
+                        file_name = strcat(steg_algorithms{i}, '_B_', bitrates{j}, '_W_', capacities{m}, '_T_', thresholds{n}, '_ER_', embedding_rates{k});
+                        fprintf('%s\n', file_name);
+                        file_path = fullfile(root_path, file_name);
+                        if ~exist(file_path, 'file')
+                            continue;
+                        else
+                            mat_file_path = fullfile(mat_stego_files_path, strcat(file_name, '.mat'));
+                            if ~exist(mat_file_path, 'file')
+                                QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, files_num);
+                                save(mat_file_path, 'QMDCTs');
+                                fprintf('%s extraction completes.\n', file_name);
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 end

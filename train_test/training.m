@@ -1,6 +1,6 @@
 %% training
 % - [result, model, predict_label, ground_truth] = ...
-%           training(cover_feature, stego_feature, percent, n, model_file_name, is_rewrite)
+%       training(cover_feature, stego_feature, percent, n, model_file_name, seek_best_params, svm_params, is_rewrite)
 % - Variable:
 % ------------------------------------------input
 % cover_feature         the feature of cover samples
@@ -29,7 +29,7 @@ if ~exist('percent', 'var') || isempty(percent)
 end
 
 if ~exist('n', 'var') || isempty(n)
-    n = 0.8;
+    n = 10;
 end
 
 if ~exist('model_file_name', 'var') || isempty(model_file_name)
@@ -46,22 +46,23 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 0 -t 0 -c 512 -g 0.0313';
+        svm_params = '-s 0 -t 0 -c 0.000009 -g 0.03125'; % 1024
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
     end
 end
 
-sample_num = size(cover_feature, 1);                                        % the number of samples
-train_set_number = 2 * floor(percent * sample_num);                         % the number of training set
+sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
+sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples
+train_set_number = 2 * floor(percent * sample_num_stego);                   % the number of training set
 feature_dimension = size(cover_feature, 2);                                 % the dimension of feature
 
-cover_label = -ones(sample_num, 1);                                         % cover label
-stego_label =  ones(sample_num, 1);                                         % steog label
-feature = [cover_feature; stego_feature];                                   % feature
-label = [cover_label; stego_label];                                         % label
-data = [feature, label];                                                    % data and label pair
+cover_label = -ones(sample_num_cover, 1);                                   % cover label
+stego_label =  ones(sample_num_stego, 1);                                   % steog label
+cover_data = [cover_feature, cover_label];                                  % cover data [feature, label]
+stego_data = [stego_feature, stego_label];                                  % stego data [feature, label]
+data = [cover_data; stego_data];                                            % data and label pair
 
 FPR = zeros(1, n);                                                          % the initialization of FPR
 FNR = zeros(1 ,n);                                                          % the initialization of FNR
@@ -69,6 +70,8 @@ ACC = zeros(1 ,n);                                                          % th
 
 predict_label = [];                                                         % the initialization of test label
 ground_truth  = [];                                                         % the initialization of real label
+
+start_time = tic;
 
 for i = 1 : n
     
@@ -81,10 +84,10 @@ for i = 1 : n
     test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label
     
     %% SVM training
-    model(i)    = libsvmtrain(train_label, train_data, svm_params);         %#ok<AGROW>
+    model(i)    = svmtrain(train_label, train_data, svm_params);            %#ok<SVMTRAIN,AGROW>
     
     %% SVM validation
-    predict = libsvmpredict(test_label, test_data, model(i));
+    predict = svmpredict(test_label, test_data, model(i));
     predict_label = [predict_label; predict];                               %#ok<AGROW>
     ground_truth  = [ground_truth; test_label];                             %#ok<AGROW>
     
@@ -97,7 +100,7 @@ for i = 1 : n
     FNR(i) = FN / (TP + FN);                                                % False Negative Rate
     ACC(i) = 1 - ((FPR(i) + FNR(i)) / 2);                                   % Accuracy
     
-    %% save the model file (保存模型文件)
+    %% save the model file
     if strcmp(is_rewrite, 'True') == 1
         
         if ~exist(model_file_name, 'file')
@@ -114,11 +117,20 @@ result.FPR = mean(FPR);
 result.FNR = mean(FNR);
 result.ACC = mean(ACC);
 result.svm_params = svm_params;
-result.best_acc = best_acc;
+
+if strcmp(seek_best_params, 'True')
+    result.best_acc = best_acc;
+else
+    result.best_acc = mean(ACC);
+end
+
 save(model_file_name, 'model');
 
+end_time = toc(start_time);
 fprintf('---------------------------------------------------\n');
+fprintf('Training\n');
 fprintf('Training set: %d%%, Test set: %d%%, %d cross validtion\n', percent*100, 100-percent*100, n);
-fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR * 100, result.FNR * 100, result.ACC * 100);
+fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR*100, result.FNR*100, result.ACC*100);
 fprintf('The model file is saved as "%s"\n', model_file_name);
+fprintf('Feature loads completes, runtime: %.2fs\n', T, end_time);
 fprintf('Current time: %s\n', datestr(now, 0));

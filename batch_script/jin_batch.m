@@ -24,12 +24,9 @@ end
 
 start_time = tic;
 
-feature_dim = 2*(2*T+1)^2;
-features = zeros(numbers, feature_dim);
-
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = jin(matrix, T);
+    features(i,:) = jin(matrix, T);                         %#ok<AGROW>
 end
 
 end_time = toc(start_time);

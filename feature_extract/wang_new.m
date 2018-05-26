@@ -20,4 +20,4 @@ feature6 = get_block_markov(matrix_abs, 'hv', 4, T, 1);
 
 features = [feature1;feature2;feature3;feature4;feature5;feature6];
 
-% features(:, all(features==0, 1)) = [];
+features(:, all(features==0, 1)) = [];

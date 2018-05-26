@@ -15,10 +15,7 @@ feature1 = get_markov(matrix, 'hv', T, 1);
 feature2 = get_markov(matrix_abs, 'hv', T, 1);
 feature3 = get_block_markov(matrix, 'hv', 2, T, 1);
 feature4 = get_block_markov(matrix_abs, 'hv', 2, T, 1);
-% feature5 = get_block_markov(matrix, 'hv', 4, T, 1);
-% feature6 = get_block_markov(matrix_abs, 'hv', 4, T, 1);
 
 features = [feature1;feature2;feature3;feature4];
 
-% features = [feature1;feature2;feature3;feature4;feature5;feature6];
-% features(:, all(features==0, 1)) = [];
+features(:, all(features==0, 1)) = [];

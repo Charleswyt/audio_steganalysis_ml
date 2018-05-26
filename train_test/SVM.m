@@ -23,7 +23,7 @@
 %  s    the type of svm,default is 0                0:C-SVC, 1:nu-SVC, 2:one-class-SVM 3:e-SVR 4: nu-SVR
 %  t    the type of kernel, default is 0            0:linear,1:poly, 2:RBF, 3:sigmoid
 %  d    the degree of kernel, default is 3
-%  -g   the gamma of kernel, default is 1/k, k is the number of classfication
+%  g    the gamma of kernel, default is 1/k, k is the number of classfication
 %  r    coef0, default is 0                 
 %  n    nu, the parameter of nu-SVC,e-SVR
 %               and nu-SVR,default is 0.5
