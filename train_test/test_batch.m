@@ -1,4 +1,17 @@
-function result = test_batch(cover_feature, stego_feature, model_file_path)
+%% test_batch
+% - result = test_batch(cover_feature, stego_feature, model_file_dir)
+% - Variable:
+% ------------------------------------------input
+% cover_feature         the feature of cover samples
+% stego_feature         the feature of stego samples
+% model_file_dir        the folder name of model files
+% -----------------------------------------output
+% result                result
+%    FPR                False positive rate
+%    FNR                False negative rate
+%    ACC                Accuracy
+
+function result = test_batch(cover_feature, stego_feature, model_file_dir)
 
 sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
 sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples
@@ -8,8 +21,9 @@ stego_label =  ones(sample_num_stego, 1);                                   % st
 data = [cover_feature; stego_feature];                                      % data and label pair
 label = [cover_label; stego_label];                                         % label
 
-model = load(model_file_path);
-predict = svmpredict(label, data, model.model);
+model_file_path = fullfile(model_file_dir, inputname(2));
+model = load_model_file(model_file_path);
+predict = svmpredict(label, data, model);
 
 FP = sum(label == -1 & predict ==  1);                                      % False Positive
 FN = sum(label ==  1 & predict == -1);                                      % False Negative
@@ -29,4 +43,18 @@ fprintf('Test\n');
 fprintf('FPR: %.2f%%, FNR %.2f%%, ACC: %.2f%%\n', result.FPR * 100, result.FNR * 100, result.ACC * 100);
 fprintf('Current time: %s\n', datestr(now, 0));
 
+end
+
+function model = load_model_file(model_file_path)
+model_file = load(model_file_path);
+models = model_file.model;
+model_num = length(models);
+accuracy = zeros(1, model_num);
+
+for i=1:model_num
+    accuracy(i) = models(i).ACC;
+end
+
+max_accuracyt_index = find(accuracy == max(accuracy));
+model = models(max_accuracyt_index).svm_model;                              %#ok<FNDSB>
 end

@@ -33,7 +33,7 @@ if ~exist('n', 'var') || isempty(n)
 end
 
 if ~exist('model_file_name', 'var') || isempty(model_file_name)
-    model_file_name = 'model.mat';
+    model_file_name = strcat(inputname(2), '.mat');
 end
 
 if ~exist('is_rewrite', 'var') || isempty(is_rewrite)
@@ -46,7 +46,7 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 0 -t 0 -c 0.000009 -g 0.03125'; % 1024
+        svm_params = '-s 0 -t 0 -c 1024 -g 0.03125'; % 1024
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
@@ -84,10 +84,10 @@ for i = 1 : n
     test_label  = temp(train_set_number+1:end, feature_dimension+1);        % test label
     
     %% SVM training
-    model(i)    = svmtrain(train_label, train_data, svm_params);            %#ok<SVMTRAIN,AGROW>
+    svm_model(i)    = svmtrain(train_label, train_data, svm_params);        %#ok<SVMTRAIN,AGROW>
     
     %% SVM validation
-    predict = svmpredict(test_label, test_data, model(i));
+    predict = svmpredict(test_label, test_data, svm_model(i));
     predict_label = [predict_label; predict];                               %#ok<AGROW>
     ground_truth  = [ground_truth; test_label];                             %#ok<AGROW>
     
@@ -100,9 +100,13 @@ for i = 1 : n
     FNR(i) = FN / (TP + FN);                                                % False Negative Rate
     ACC(i) = 1 - ((FPR(i) + FNR(i)) / 2);                                   % Accuracy
     
+    model(i).svm_model = svm_model(i);                                      %#ok<AGROW>
+    model(i).FPR = FPR(i);                                                  %#ok<AGROW>
+    model(i).FNR = FNR(i);                                                  %#ok<AGROW>
+    model(i).ACC = ACC(i);                                                  %#ok<AGROW>
+    
     %% save the model file
     if strcmp(is_rewrite, 'True') == 1
-        
         if ~exist(model_file_name, 'file')
             save(model_file_name, 'model', '-append');
         else
@@ -124,7 +128,9 @@ else
     result.best_acc = mean(ACC);
 end
 
-save(model_file_name, 'model');
+model_files_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';
+model_file_path = fullfile(model_files_dir, model_file_name);
+save(model_file_path, 'model');
 
 end_time = toc(start_time);
 fprintf('---------------------------------------------------\n');
@@ -132,5 +138,5 @@ fprintf('Training\n');
 fprintf('Training set: %d%%, Test set: %d%%, %d cross validtion\n', percent*100, 100-percent*100, n);
 fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR*100, result.FNR*100, result.ACC*100);
 fprintf('The model file is saved as "%s"\n', model_file_name);
-fprintf('Feature loads completes, runtime: %.2fs\n', T, end_time);
+fprintf('Feature loads completes, runtime: %.2fs\n', end_time);
 fprintf('Current time: %s\n', datestr(now, 0));

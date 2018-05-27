@@ -16,11 +16,11 @@ for m = 1:length(files_paths)
             continue;
         else
             command = strcat(variable_name, '=load(''', feature_file_path, ''');', variable_name, '=', variable_name, '.feature;');
-            fprintf('feature %s is loaded.', variable_name);
+            fprintf('feature %s is loaded.\n', variable_name);
             eval(command);
         end
     end
 end
 
 end_time = toc(start_time);
-fprintf('Feature loads completes, runtime: %.2fs\n', T, end_time);
+fprintf('Feature loads completes, runtime: %.2fs\n', end_time);
