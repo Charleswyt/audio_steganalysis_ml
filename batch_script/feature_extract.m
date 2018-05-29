@@ -14,7 +14,7 @@ if ~exist(feature_stego_files_path, 'file') mkdir(feature_stego_files_path); end
 [files_list, file_num] = get_files_list(cover_mat_files_path, 'mat');
 for i = 1:file_num
     for j = 1:length(feature_types)
-        feature_file_path = fullfile(feature_stego_files_path, strcat(feature_types{j}, '_', files_list{i}));
+        feature_file_path = fullfile(feature_cover_files_path, strcat(feature_types{j}, '_', files_list{i}));
         if ~exist(feature_file_path, 'file')
             mat_file_path = fullfile(cover_mat_files_path, files_list{i});
             QMDCT_matrix = load(mat_file_path);

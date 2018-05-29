@@ -3,13 +3,14 @@
 %               EECS_B_128_W_6_T_0_ER_10
 
 [QMDCT_num, files_num] = deal(576, 1000);
-steg_algorithms = {'ACS', 'EECS', 'HCM', 'AHCM'};
+cover_types = {'MP3Stego'};
+steg_algorithms = {'ACS', 'EECS', 'HCM', 'AHCM', 'MP3Stego'};
 bitrates = {'128', '192', '256', '320'};
 capacities = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10'};
 thresholds = {'0', '1', '2', '3', '4'};
 embedding_rates = {'01', '03', '05', '08', '10'};
 
-root_path = 'C:\Users\Charles_CatKing\Desktop\QMDCT';
+root_path = 'H:\ToWYT3';
 mat_files_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\mat';
 
 mat_cover_files_path = fullfile(mat_files_path, 'cover');
@@ -27,16 +28,19 @@ else
     end
 
 %% cover
-    for i = 1:length(bitrates)
-        file_name = strcat('cover_', bitrates{i});
-        file_path = fullfile(root_path, file_name);
-        if ~exist(file_path, 'file')
-            continue;
-        else
-            mat_file_path = fullfile(mat_cover_files_path, strcat(file_name, '.mat'));
-            QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, files_num);
-            if ~exist(mat_file_path, 'file')
-                save(mat_file_path, 'QMDCTs');
+    for i = 1;length(cover_types)
+        for j = 1:length(bitrates)
+            file_name = strcat(cover_types{i}, '_', bitrates{j});
+            file_path = fullfile(root_path, file_name);
+            if ~exist(file_path, 'file')
+                continue;
+            else
+                mat_file_path = fullfile(mat_cover_files_path, strcat(file_name, '.mat'));
+                if ~exist(mat_file_path, 'file')
+                    QMDCTs = qmdct_extract_batch(file_path, QMDCT_num, files_num);
+                    save(mat_file_path, 'QMDCTs');
+                    fprintf('%s extraction completes.\n', file_name);
+                end
             end
         end
     end

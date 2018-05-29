@@ -11,7 +11,12 @@
 %    FNR                False negative rate
 %    ACC                Accuracy
 
-function result = test_batch(cover_feature, stego_feature, model_file_dir)
+function result = test_batch(cover_feature, stego_feature, model_file_path)
+
+model_file_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';
+if ~exist('model_file_path', 'var') || isempty(model_file_path)
+    model_file_path = fullfile(model_file_dir, strcat(inputname(2), '.mat'));
+end
 
 sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
 sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples
@@ -21,7 +26,6 @@ stego_label =  ones(sample_num_stego, 1);                                   % st
 data = [cover_feature; stego_feature];                                      % data and label pair
 label = [cover_label; stego_label];                                         % label
 
-model_file_path = fullfile(model_file_dir, inputname(2));
 model = load_model_file(model_file_path);
 predict = svmpredict(label, data, model);
 

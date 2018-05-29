@@ -21,16 +21,24 @@ if ~exist('text_nums', 'var') || isempty(text_nums)
     text_nums = file_num;
 end
 
+if file_num == 0
+    text_nums = 0;
+end
+
 start_time = tic;
 
-for i = 1:text_nums
-    text_file_path = fullfile(text_files_path, files_list{i});
-    QMDCTs(:,:,i)   = load(text_file_path);                         %#ok<AGROW>
+if text_nums ~= 0
+    for i = 1:text_nums
+        text_file_path = fullfile(text_files_path, files_list{i});
+        QMDCTs(:,:,i)   = load(text_file_path);                         %#ok<AGROW>
+    end
+    
+    QMDCTs = QMDCTs(:,1:QMDCT_num,:);
+else
+    QMDCTs = -1;
 end
 
 end_time = toc(start_time);
-
-QMDCTs = QMDCTs(:,1:QMDCT_num,:);
 
 fprintf('QMDCT matrix extraction completes, runtime: %.2fs\n', end_time);
 
