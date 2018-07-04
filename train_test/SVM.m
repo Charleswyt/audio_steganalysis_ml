@@ -1,13 +1,14 @@
 % Get the best SVM parameters
 % [bestacc, best_t, best_c, best_g] = ...
-%       SVMcg(train_label, train, c_min, c_max, g_min, g_max, v, c_step, g_step)
+%       SVMcg(train_label, train, t_flag, c_min, c_max, g_min, g_max, v, c_step, g_step)
 %
 % - Variable:
 % ------------------------------------------input
 % train_label: train label
 % train :train data
-% cmin  : the min poser of c, c_min = 2^(cmin), default is -5
-% cmax  : the max poser of c, c_max = 2^(cmax), default is +5
+% t_flag: a flag which indicates whether find best t or not, default is "False" -> t=0 (linear kernel)
+% cmin  : the min poser of c, c_min = 2^(cmin), default is -10
+% cmax  : the max poser of c, c_max = 2^(cmax), default is +10
 % gmin  : the min poser of g, g_min = 2^(gmin), default is -5
 % gmax  : the max poser of g, g_max = 2^(gmax), default is +5
 % v     : the folder of cross validation, default is 3
@@ -35,7 +36,7 @@
 %  wi   the weight of c, default is 1
 
 function [best_acc, best_t, best_c, best_g] = ...
-    SVM(train_label, train, c_min, c_max, g_min, g_max, v, c_step, g_step, t_flag)
+    SVM(label, data, t_flag, c_min, c_max, g_min, g_max, v, c_step, g_step)
 
 %% default
 if ~exist('v', 'var') || isempty(v) v = 3; end                              %#ok<SEPEX>
@@ -50,7 +51,6 @@ if ~exist('t_flag', 'var') || isempty(t_flag) t_flag = 'False'; end         %#ok
 %% X:c Y:g cg:acc
 [X, Y] = meshgrid(c_min:c_step:c_max, g_min:g_step:g_max);
 [m, n] = size(X);
-
 if strcmp(t_flag, 'True') T = [0, 2]; end                                   %#ok<SEPEX>
 if strcmp(t_flag, 'False') T = 0; end                                       %#ok<SEPEX>
 
@@ -60,7 +60,7 @@ for t = T
     for i = 1:m
         for j = 1:n
             svm_params = ['-s 0 -t ',num2str(t),' -v ',num2str(v),' -c ',num2str(base_num^X(i,j)),' -g ',num2str(base_num^Y(i,j))];
-            cg(t+1,i,j) = libsvmtrain(train_label, train, svm_params);      %#ok<AGROW>
+            cg(t+1,i,j) = libsvmtrain(label, data, svm_params);             %#ok<AGROW>
             if (cg(t+1,i,j) > best_acc) || (cg(t+1,i,j) == best_acc && best_c > base_num^X(i,j))
                 [best_acc, best_t, best_c, best_g] = deal(cg(t+1,i,j), t, base_num^X(i,j), base_num^Y(i,j));
             end
