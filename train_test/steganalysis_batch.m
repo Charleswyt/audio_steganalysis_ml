@@ -1,5 +1,5 @@
 %% test_batch
-% - result = test_batch(cover_feature, stego_feature, model_file_dir)
+% - result = steganalysis_batch(cover_feature, stego_feature, model_file_dir)
 % - Variable:
 % ------------------------------------------input
 % cover_feature         the feature of cover samples
@@ -11,7 +11,7 @@
 %    FNR                False negative rate
 %    ACC                Accuracy
 
-function result = test_batch(cover_feature, stego_feature, model_file_path)
+function result = steganalysis_batch(cover_feature, stego_feature, model_file_path)
 
 model_file_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';
 if ~exist('model_file_path', 'var') || isempty(model_file_path)
@@ -26,7 +26,9 @@ stego_label =  ones(sample_num_stego, 1);                                   % st
 data = [cover_feature; stego_feature];                                      % data and label pair
 label = [cover_label; stego_label];                                         % label
 
-model = load_model_file(model_file_path);
+% model = load_model_file(model_file_path);
+models = load('model.mat');
+model = models.model;
 predict = svmpredict(label, data, model);
 
 FP = sum(label == -1 & predict ==  1);                                      % False Positive

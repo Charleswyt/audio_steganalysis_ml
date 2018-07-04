@@ -1,5 +1,5 @@
 %% training
-% - [result, model, predict, ground_truth] = ...
+% - [result, prob, model, predict, ground_truth] = ...
 %      training(cover_feature, stego_feature, percent, n, model_file_name, seek_best_params, svm_params, is_rewrite)
 % - Variable:
 %------------------------------------------input
@@ -16,7 +16,9 @@
 %   FPR                 False positive rate
 %   FNR                 False negative rate
 %   ACC                 Accuracy
-% model                 model
+%   svm_params          svm params of current model
+% prob                  probability estimates
+% model                 svm model
 % predict               predictal label
 % ground_truth          real label
 
@@ -48,10 +50,12 @@ if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
         svm_params = '-s 0 -t 0 -c 256 -g 1024'; %1024
     elseif strcmp(seek_best_params, 'True')
-        [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature, percent);
+        [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
     end
 end
+
+model_files_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';   % model files dir
 
 sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
 sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples
@@ -105,7 +109,6 @@ else
     result.best_acc = mean(ACC);
 end
 
-model_files_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';
 model_file_path = fullfile(model_files_dir, model_file_name);
 save(model_file_path, 'model');
 

@@ -1,13 +1,10 @@
 %% test
-% - test(audio_file_path, stego_method, feature_type)
+% - result = test(cover_feature, stego_feature, model_file_path)
 % - Variable:
 % ------------------------------------------input
-% audio_file_path       the path of audio file
-% stego_method          the algorithm of audio steganalysis
-% percent               the percent of training set, default is 0.8
-% n                     the times of cross-validation default is 10
-% model_file_name       the file name of model
-% is_rewrite            whether to rewrite the model file
+% cover_feature         the feature of cover samples
+% stego_feature         the feature of stego samples
+% model_file_path       the path of model file
 % -----------------------------------------output
 % result                result
 %    FPR                False positive rate
@@ -16,29 +13,30 @@
 % model                 model
 % predict_label         predictal label
 % ground_truth          real label
-function result = test(audio_file_path, stego_method, feature_type)
+function [result, error_id] = test(cover_feature, stego_feature, model_file_path)
 
-audio_info = audioinfo(audio_file_path);
-bitrate = audio_info.BitRate;
+sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
+sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples
 
-if exist(audio_file_path, 'file')
-    QMDCT = get_qmdcts(audio_file_path);
-    model_file_name = strcat(stego_method, '_', feature_type, '_', num2str(bitrate), '.mat');
-    model_file_path = fullfile('.\models', stego_method, model_file_name);
+cover_label = -ones(sample_num_cover, 1);                                   % cover label
+stego_label =  ones(sample_num_stego, 1);                                   % steog label
+feature = [cover_feature; stego_feature];                                   % feature
+label = [cover_label; stego_label];                                         % label
 
-    model = load(model_file_path);
-    
-    if strcmp(feature_type, 'jin')
-        feature = jin(QMDCT, 6);
-    elseif strcmp(feature_type, 'ren')
-        feature = ren(QMDCT, 4);
-    end
-    result = svmpredict(0, feature', model.model);
-    if result == -1
-        fprintf('result_%s: cover\n', feature_type);
-    else
-        fprintf('result_%s: stego\n', feature_type);
-    end
-else
-    fprintf('The current audio file does not exist.\n');
-end
+% load model file
+model_file = load(model_file_path);
+model = model_file.model;
+
+predict = libsvmpredict(label, feature, model);                             % svm predict
+error_id = find(predict ~= label);                                          % find error file ID
+
+FP = sum(test_label == -1 & predict ==  1);                                 % False Positive
+FN = sum(test_label ==  1 & predict == -1);                                 % False Negative
+TP = sum(test_label ==  1 & predict ==  1);                                 % True  Positive
+TN = sum(test_label == -1 & predict == -1);                                 % True  Positive
+
+FPR = FP / (FP + TN);                                                       % False Positive Rate
+FNR = FN / (TP + FN);                                                       % False Negative Rate
+ACC = 1 - ((FPR + FNR) / 2);                                                % Accuracy
+
+result.FPR = FPR;result.FNR = FNR;result.ACC = ACC;
