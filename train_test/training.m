@@ -48,10 +48,10 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 0 -t 0 -c 256 -g 1024'; %1024
+        svm_params = '-s 0 -t 0 -c 256 -g 1024 -b 1'; %1024
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature);
-        svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
+        svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg), '-b 1'];
     end
 end
 
@@ -66,16 +66,16 @@ cover_label = -ones(sample_num_cover, 1);                                   % co
 stego_label =  ones(sample_num_stego, 1);                                   % steog label
 cover_data = [cover_feature, cover_label];                                  % cover data [feature, label]
 stego_data = [stego_feature, stego_label];                                  % stego data [feature, label]
-data = [cover_data; stego_data];                                            % data and label pair
-data = shuffle(data);                                                       % data shuffle
+merge = [cover_data; stego_data];                                           % data and label pair
+merge = shuffle(merge);                                                     % data shuffle
 
 start_time = tic;
 
 %% make data
-train_data  = data(1:train_set_number, 1:feature_dimension);                % training data
-train_label = data(1:train_set_number, feature_dimension+1);                % training label
-test_data   = data(train_set_number+1:end, 1:feature_dimension);            % test data
-test_label  = data(train_set_number+1:end, feature_dimension+1);            % test label
+train_data  = merge(1:train_set_number, 1:feature_dimension);               % training data
+train_label = merge(1:train_set_number, feature_dimension+1);               % training label
+test_data   = merge(train_set_number+1:end, 1:feature_dimension);           % test data
+test_label  = merge(train_set_number+1:end, feature_dimension+1);           % test label
 
 %% SVM training
 model = libsvmtrain(train_label, train_data, svm_params);

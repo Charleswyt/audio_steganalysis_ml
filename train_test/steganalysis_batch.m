@@ -1,4 +1,4 @@
-%% test_batch
+% steganalysis_batch
 % - result = steganalysis_batch(cover_feature, stego_feature, model_file_dir)
 % - Variable:
 % ------------------------------------------input
@@ -49,18 +49,4 @@ fprintf('Test\n');
 fprintf('FPR: %.2f%%, FNR %.2f%%, ACC: %.2f%%\n', result.FPR * 100, result.FNR * 100, result.ACC * 100);
 fprintf('Current time: %s\n', datestr(now, 0));
 
-end
-
-function model = load_model_file(model_file_path)
-model_file = load(model_file_path);
-models = model_file.model;
-model_num = length(models);
-accuracy = zeros(1, model_num);
-
-for i=1:model_num
-    accuracy(i) = models(i).ACC;
-end
-
-max_accuracyt_index = find(accuracy == max(accuracy));
-model = models(max_accuracyt_index).svm_model;                              %#ok<FNDSB>
 end

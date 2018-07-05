@@ -39,7 +39,7 @@ function [best_acc, best_t, best_c, best_g] = ...
     SVM(label, data, t_flag, c_min, c_max, g_min, g_max, v, c_step, g_step)
 
 %% default
-if ~exist('v', 'var') || isempty(v) v = 3; end                              %#ok<SEPEX>
+if ~exist('v', 'var') || isempty(v) v = 10; end                             %#ok<SEPEX>
 if ~exist('g_max', 'var') || isempty(g_max) g_max = 5; end                  %#ok<SEPEX>
 if ~exist('c_max', 'var') || isempty(c_max) c_max = 5; end                  %#ok<SEPEX>
 if ~exist('g_min', 'var') || isempty(g_min) g_min = -5; end                 %#ok<SEPEX>
