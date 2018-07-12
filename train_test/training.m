@@ -1,12 +1,11 @@
 %% training
 % - [result, prob, model, predict, ground_truth] = ...
-%      training(cover_feature, stego_feature, percent, n, model_file_name, seek_best_params, svm_params, is_rewrite)
+%      training(cover_feature, stego_feature, percent, model_file_name, seek_best_params, svm_params, is_rewrite)
 % - Variable:
 %------------------------------------------input
 % cover_feature         the feature of cover samples
 % stego_feature         the feature of stego samples
 % percent               the percent of training set, default is 0.8
-% n                     the times of cross-validation default is 10
 % model_file_name       the file name of model
 % svm_params            svm parameters for training
 % seek_best_paarams     whether seek the optimal parameters for training
@@ -23,15 +22,11 @@
 % ground_truth          real label
 
 function [result, prob, model, predict, ground_truth] ...
-    = training(cover_feature, stego_feature, percent, n, model_file_name, seek_best_params, svm_params, is_rewrite)
+    = training(cover_feature, stego_feature, percent, model_file_name, seek_best_params, svm_params, is_rewrite)
 
 %default parameters
 if ~exist('percent', 'var') || isempty(percent)
     percent = 0.8;
-end
-
-if ~exist('n', 'var') || isempty(n)
-    n = 10;
 end
 
 if ~exist('model_file_name', 'var') || isempty(model_file_name)
@@ -115,7 +110,7 @@ save(model_file_path, 'model');
 end_time = toc(start_time);
 fprintf('---------------------------------------------------\n');
 fprintf('Training\n');
-fprintf('Training set: %d%%, Test set: %d%%, %d cross validtion\n', percent*100, 100-percent*100, n);
+fprintf('Training set: %d%%, Test set: %d%%\n', percent*100, 100-percent*100);
 fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR*100, result.FNR*100, result.ACC*100);
 fprintf('The model file is saved as "%s"\n', model_file_name);
 fprintf('Feature loads completes, runtime: %.2fs\n', end_time);
