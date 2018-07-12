@@ -20,6 +20,7 @@ try
     modification_percentage = diff_length / total_length;
 
     fprintf('relative embedding rate: %.2f%%\n', 100*modification_percentage);
+    plot(diff(:,1));
 catch
     fprintf('Error: format is not correct or file dose not exist, please try again.\n');
 end

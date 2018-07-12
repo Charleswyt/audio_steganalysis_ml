@@ -1,12 +1,19 @@
 %% Get difference percentage (used to select a better preprocessing method)
-% Bitrate = 128kbps, RER = 100%
+% difference_percentage(cover_qmdct_file_path, stego_qmdct_file_path)
+% - Variable:
+% ------------------------------------------input
+% cover_qmdct_file_path           path of cover qmdct file
+% stego_qmdct_file_path           path of stego qmdct file
+% -----------------------------------------output
+% NULL
 
-cover = load('E:\Myself\2.database\mtap\txt\cover\128\wav10s_00003.txt');
-% stego = load('E:\Myself\2.database\mtap\mp3\stego\EECS\EECS_W_2_B_128_ER_10\wav10s_00003_stego_128.txt');
-stego = load('E:\Myself\2.database\mtap\mp3\stego\HCM\HCM_B_128_ER_08\wav10s_00003.txt');
+function difference_percentage(cover_qmdct_file_path, stego_qmdct_file_path)
+
+cover = load(cover_qmdct_file_path);
+stego = load(stego_qmdct_file_path);
 
 %% cut
-QMDCT_num = 450;
+QMDCT_num = 500;
 cover = cover(:, 1:QMDCT_num);
 stego = stego(:, 1:QMDCT_num);
 
