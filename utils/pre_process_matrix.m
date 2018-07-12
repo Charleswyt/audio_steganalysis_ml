@@ -5,15 +5,22 @@
 % matrix                matrix
 % method                the method of preporcessing
 %
-%   'dif1_h'            1st order difference in horizontal direction
-%   'dif1_v'            1st order difference in vertical direction
-%   'dif2_h'            2nd order difference in horizontal direction
-%   'dif2_v'            2nd order difference in vertical direction
-%   'abs'               absolute
-%   'abs_dif1_h'        1st order absolute difference in horizontal direction
-%   'abs_dif1_v'        1st order absolute difference in vertical direction
-%   'abs_dif2_h'        2nd order absolute difference in horizontal direction
-%   'abs_dif2_v'        2nd order absolute difference in vertical direction
+% Suppose, matrix M = [
+%                       Q1,1 Q1,2 ... Q1,576
+%                              ...
+%                       Qi,1 Qi,2 ... Qi,576
+%                              ...
+%                       Q200,1 Q200,2 ... Q200,576
+%                                                  ]
+%   'dif1_h'            1st order difference in horizontal direction             Qi,j - Qi,j+1
+%   'dif1_v'            1st order difference in vertical direction               Qi,j - Qi+1,j
+%   'dif2_h'            2nd order difference in horizontal direction             Qi,j - 2 * Qi,j+1 + Qi,j+2
+%   'dif2_v'            2nd order difference in vertical direction               Qi,j - 2 * Qi+1,j + Qi+2,j
+%   'abs'               absolute                                                |Qi,j|
+%   'abs_dif1_h'        1st order absolute difference in horizontal direction   |Qi,j| - |Qi,j+1|
+%   'abs_dif1_v'        1st order absolute difference in vertical direction     |Qi,j| - |Qi+1,j|
+%   'abs_dif2_h'        2nd order absolute difference in horizontal direction   |Qi,j| - 2 * |Qi,j+1| + |Qi,j+2|
+%   'abs_dif2_v'        2nd order absolute difference in vertical direction     |Qi,j| - 2 * |Qi+1,j| + |Qi+2,j|
 %   'interval'          interval subtraction with stride 2
 % -----------------------------------------output
 % new_matrix            the processed matrix
