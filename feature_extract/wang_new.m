@@ -1,5 +1,5 @@
 %% Wang-Markov_multiscale
-% - features = ren(matrix, T)
+% - features = wang_new(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -9,15 +9,14 @@
 
 function features = wang_new(matrix, T)
 
-matrix_abs = pre_process_matrix(matrix, 'abs');
+matrix_abs_dif2_h = pre_process_matrix(matrix, 'abs_dif2_h');
+matrix_abs_dif2_v = pre_process_matrix(matrix, 'abs_dif2_v');
 
-feature1 = get_markov(matrix, 'hv', T, 1);
-feature2 = get_markov(matrix_abs, 'hv', T, 1);
-feature3 = get_block_markov(matrix, 'hv', 2, T, 1);
-feature4 = get_block_markov(matrix_abs, 'hv', 2, T, 1);
-feature5 = get_block_markov(matrix, 'hv', 4, T, 1);
-feature6 = get_block_markov(matrix_abs, 'hv', 4, T, 1);
 
-features = [feature1;feature2;feature3;feature4;feature5;feature6];
+feature1 = get_point_block_markov(matrix, T);
+feature2 = get_point_block_markov(matrix_abs_dif2_h, T);
+feature3 = get_point_block_markov(matrix_abs_dif2_v, T);
+
+features = [feature1;feature2;feature3];
 
 features(:, all(features==0, 1)) = [];
