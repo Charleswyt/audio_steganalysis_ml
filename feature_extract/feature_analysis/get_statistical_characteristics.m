@@ -1,13 +1,4 @@
 %% get the statistical characteristics
-% [mean_value, var, skew, kurt] = get_statistical_characteristics(vector)
-% - Variable:
-% ------------------------------------------input
-% vector            input vector
-% -----------------------------------------output
-% mean_value        mean     of input vector
-% var               variance of input vector
-% skew              skewness of input vector
-% kurt              kurtosis of input vector
 
 cover = load('E:\Myself\2.database\mtap\mp3\cover\128\wav10s_00001.txt');
 stego = load('E:\Myself\2.database\mtap\mp3\stego\EECS\EECS_W_2_B_128_ER_10\wav10s_00001_stego_128.txt');
@@ -32,19 +23,4 @@ for t = T
     fprintf('variance: %.2f\n', var_dif);
     fprintf('skewness: %.2f\n', skew_dif);
     fprintf('kurtosis: %.2f\n', kurt_dif);
-end
-    
-
-function [mean_value, var, skew, kurt] = statistical_characteristics(vector)
-
-mean_value = mean(vector);
-var  = std(vector) * std(vector);
-skew = skewness(vector);
-kurt = kurtosis(vector);
-
-% fprintf('mean     of input vector is %.2f', mean_value);
-% fprintf('variance of input vector is %.2f', var);
-% fprintf('skewness of input vector is %.2f', skew);
-% fprintf('kurtosis of input vector is %.2f', kurt);
-
 end
