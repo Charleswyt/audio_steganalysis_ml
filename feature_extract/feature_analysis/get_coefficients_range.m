@@ -17,10 +17,24 @@ try
     diff = cover - stego;
     position = (diff ~= 0);
     
-    min_cover_coeff = min(cover(position));
-    max_cover_coeff = max(cover(position));
-    min_stego_coeff = min(stego(position));
-    max_stego_coeff = max(stego(position));
+    cover_modified = cover(position);
+    stego_modified = stego(position);
+    
+    min_cover_coeff = min(cover_modified);
+    max_cover_coeff = max(cover_modified);
+    min_stego_coeff = min(stego_modified);
+    max_stego_coeff = max(stego_modified);
+    
+    tab_cover = tabulate(cover_modified(:));
+    tab_stego = tabulate(stego_modified(:));
+    
+    figure(1);plot(tab_cover(:,1), tab_cover(:,3));
+    xlabel('coefficients value');ylabel('Percentage(%)');
+    title('Modified coefficients in cover');
+    
+    figure(2);plot(tab_stego(:,1), tab_stego(:,3));
+    xlabel('coefficients value');ylabel('Percentage(%)');
+    title('Modified coefficients in stego');
     
     fprintf('minimum of coefficients in cover QMDCT file is %d.\n', min_cover_coeff);
     fprintf('maximum of coefficients in cover QMDCT file is %d.\n', max_cover_coeff);

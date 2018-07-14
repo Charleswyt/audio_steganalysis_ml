@@ -13,7 +13,7 @@ cover = load(cover_qmdct_file_path);
 stego = load(stego_qmdct_file_path);
 
 %% cut
-QMDCT_num = 500;
+QMDCT_num = 420;
 cover = cover(:, 1:QMDCT_num);
 stego = stego(:, 1:QMDCT_num);
 
@@ -45,18 +45,18 @@ stego_abs_dif_c_2 = pre_process_matrix(stego, 'abs_dif2_h');
 stego_abs_dif_r_2 = pre_process_matrix(stego, 'abs_dif2_v');
 
 % substraction
-diff = cover(:) - stego(:);percentage = length(find(diff ~= 0)) / length(find(cover ~= 0));
-diff_abs = cover_abs(:) - stego_abs(:);percentage_abs = length(find(diff_abs ~= 0)) / length(find(cover ~= 0));
+diff = cover(:) - stego(:);percentage = length(find(diff ~= 0)) / length(cover(:));
+diff_abs = cover_abs(:) - stego_abs(:);percentage_abs = length(find(diff_abs ~= 0)) / length(cover(:));
 
-diff_dif_c_1 = cover_dif_c_1(:) - stego_dif_c_1(:);percentage_dif_c_1 = length(find(diff_dif_c_1 ~= 0)) / length(find(cover ~= 0));
-diff_dif_r_1 = cover_dif_r_1(:) - stego_dif_r_1(:);percentage_dif_r_1 = length(find(diff_dif_r_1 ~= 0)) / length(find(cover ~= 0));
-diff_dif_c_2 = cover_dif_c_2(:) - stego_dif_c_2(:);percentage_dif_c_2 = length(find(diff_dif_c_2 ~= 0)) / length(find(cover ~= 0));
-diff_dif_r_2 = cover_dif_r_2(:) - stego_dif_r_2(:);percentage_dif_r_2 = length(find(diff_dif_r_2 ~= 0)) / length(find(cover ~= 0));
+diff_dif_c_1 = cover_dif_c_1(:) - stego_dif_c_1(:);percentage_dif_c_1 = length(find(diff_dif_c_1 ~= 0)) / length(cover(:));
+diff_dif_r_1 = cover_dif_r_1(:) - stego_dif_r_1(:);percentage_dif_r_1 = length(find(diff_dif_r_1 ~= 0)) / length(cover(:));
+diff_dif_c_2 = cover_dif_c_2(:) - stego_dif_c_2(:);percentage_dif_c_2 = length(find(diff_dif_c_2 ~= 0)) / length(cover(:));
+diff_dif_r_2 = cover_dif_r_2(:) - stego_dif_r_2(:);percentage_dif_r_2 = length(find(diff_dif_r_2 ~= 0)) / length(cover(:));
 
-diff_abs_dif_c_1 = cover_abs_dif_c_1(:) - stego_abs_dif_c_1(:);percentage_abs_dif_c_1 = length(find(diff_abs_dif_c_1 ~= 0)) / length(find(cover ~= 0));
-diff_abs_dif_r_1 = cover_abs_dif_r_1(:) - stego_abs_dif_r_1(:);percentage_abs_dif_r_1 = length(find(diff_abs_dif_r_1 ~= 0)) / length(find(cover ~= 0));
-diff_abs_dif_c_2 = cover_abs_dif_c_2(:) - stego_abs_dif_c_2(:);percentage_abs_dif_c_2 = length(find(diff_abs_dif_c_2 ~= 0)) / length(find(cover ~= 0));
-diff_abs_dif_r_2 = cover_abs_dif_r_2(:) - stego_abs_dif_r_2(:);percentage_abs_dif_r_2 = length(find(diff_abs_dif_r_2 ~= 0)) / length(find(cover ~= 0));
+diff_abs_dif_c_1 = cover_abs_dif_c_1(:) - stego_abs_dif_c_1(:);percentage_abs_dif_c_1 = length(find(diff_abs_dif_c_1 ~= 0)) / length(cover(:));
+diff_abs_dif_r_1 = cover_abs_dif_r_1(:) - stego_abs_dif_r_1(:);percentage_abs_dif_r_1 = length(find(diff_abs_dif_r_1 ~= 0)) / length(cover(:));
+diff_abs_dif_c_2 = cover_abs_dif_c_2(:) - stego_abs_dif_c_2(:);percentage_abs_dif_c_2 = length(find(diff_abs_dif_c_2 ~= 0)) / length(cover(:));
+diff_abs_dif_r_2 = cover_abs_dif_r_2(:) - stego_abs_dif_r_2(:);percentage_abs_dif_r_2 = length(find(diff_abs_dif_r_2 ~= 0)) / length(cover(:));
 
 fprintf('==================================\n');
 fprintf('original: %.2f%%\n', percentage*100);
