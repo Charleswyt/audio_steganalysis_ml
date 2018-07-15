@@ -27,7 +27,7 @@ for i = 1:length(bitrate)
     plot(tab_cover(:,1), tab_cover(:,3), 'LineWidth', 2);hold on;
 end
 xlabel('QMDCT Coefficients Value', 'fontsize', 12);
-ylabel('Percentage(%)', 'fontsize', 12);
+ylabel('Percentage (%)', 'fontsize', 12);
 legend('128 kbps','192 kbps','256 kbps','320 kbps');
 set(gca,'FontSize',11);
 axis([min(matrix_tab(:,1)), max(matrix_tab(:,1)), 0, 40]);

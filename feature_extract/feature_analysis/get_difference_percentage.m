@@ -7,6 +7,15 @@
 % -----------------------------------------output
 % NULL
 
+cover_file_path = 'E:\Myself\2.database\mtap\txt\cover\128\wav10s_00001.txt';
+% stego_file_path = 'E:\Myself\2.database\mtap\txt\stego\EECS\EECS_W_2_B_128_ER_05\wav10s_00001_stego_128.txt';
+stego_file_path = 'E:\Myself\2.database\mtap\txt\stego\HCM\HCM_B_128_ER_10\wav10s_00001.txt';
+
+% cover_file_path = 'E:\Myself\2.database\mtap\mp3\cover\mp3stego_128\wav10s_00001.txt';
+% stego_file_path = 'E:\Myself\2.database\mtap\mp3\stego\MP3Stego\MP3Stego_B_128_ER_05\wav10s_00001.txt';
+
+difference_percentage(cover_file_path, stego_file_path);
+
 function difference_percentage(cover_qmdct_file_path, stego_qmdct_file_path)
 
 cover = load(cover_qmdct_file_path);
@@ -71,3 +80,4 @@ fprintf('first  order abs col difference: %.2f%%\n', percentage_abs_dif_c_1*100)
 fprintf('first  order abs row difference: %.2f%%\n', percentage_abs_dif_r_1*100);
 fprintf('second order abs col difference: %.2f%%\n', percentage_abs_dif_c_2*100);
 fprintf('second order abs row difference: %.2f%%\n', percentage_abs_dif_r_2*100);
+end
