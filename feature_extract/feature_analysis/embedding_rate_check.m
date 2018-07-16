@@ -12,11 +12,12 @@ function modification_percentage = embedding_rate_check(cover_audio_path, stego_
 try
     [cover, fs] = audioread(cover_audio_path);
     stego = audioread(stego_audio_path);
-    diff = cover - stego;
+    diff = cover(:,1) - stego(:,1);
+    
     modification = diff(diff~=0);
     diff_length = length(modification);
-    total_length = length(cover);
-    modification_percentage = diff_length / (fs * 1.3);
+    time = 50 * (10 / 384);                                                 % ึก * ร๋ / ึก
+    modification_percentage = diff_length / (fs * time);
 
     fprintf('relative embedding rate: %.2f%%\n', 100*modification_percentage);
     plot(diff(:,1));

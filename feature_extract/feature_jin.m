@@ -1,5 +1,5 @@
 %% Jin-Markov
-% - features = jin(matrix, T)
+% - features = feature_jin(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,7 @@
 % -----------------------------------------output
 % feature               feature vector
 
-function features = jin(matrix, T)
+function features = feature_jin(matrix, T)
 
 matrix_dif1 = pre_process_matrix(matrix, 'dif1_v');
 matrix_abs_dif1 = pre_process_matrix(matrix, 'abs_dif1_v');

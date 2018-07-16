@@ -1,5 +1,5 @@
 %% Wang-Markov_multiscale
-% - features = wang_new(matrix, T)
+% - features = feature_wang(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,7 @@
 % -----------------------------------------output
 % feature               feature vector
 
-function features = wang_new(matrix, T)
+function features = feature_wang(matrix, T)
 
 matrix_abs_dif2_h = pre_process_matrix(matrix, 'abs_dif2_h');
 matrix_abs_dif2_v = pre_process_matrix(matrix, 'abs_dif2_v');
