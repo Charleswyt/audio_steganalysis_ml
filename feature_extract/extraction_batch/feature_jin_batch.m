@@ -1,6 +1,6 @@
-%% jin feature extraction in batch
+%% jin features extraction in batch
 
-% - features = ren_batch(matrixs, T)
+% - features = feature_jin_batch(matrixs, T)
 % - Variable:
 % ------------------------------------------input
 % matrixs           QMDCT coefficients matrix
@@ -10,12 +10,12 @@
 % -----------------------------------------output
 % features          feature dimension
 
-function features = jin_batch(matrixs, T, numbers)
+function features = feature_jin_batch(matrixs, T, numbers)
 
 total_number = size(matrixs, 3);
 
 if ~exist('T', 'var') || isempty(T)
-    T = 15;
+    T = 6;
 end
 
 if ~exist('numbers', 'var') || isempty(numbers)

@@ -1,20 +1,22 @@
-%% wang feature extraction in batch
+%% features extraction in batch
 %
+% - features = feature_extract_batch(matrixs, T)
 % - Variable:
 % ------------------------------------------input
 % matrixs           QMDCT coefficients matrix
 %                       size(matrix) * N, N is the total number of samples
+% feature_type      type of extracted feature
 % T                 threshold value
 % numbers           the number of audio files to be processed
 % -----------------------------------------output
-% features          feature dimension
+% features          features
 
-function features = wang_batch(matrixs, T, numbers)
+function features = feature_extract_batch(matrixs, feature_type, T, numbers)
 
 total_number = size(matrixs, 3);
 
 if ~exist('T', 'var') || isempty(T)
-    T = 15;
+    T = 3;
 end
 
 if ~exist('numbers', 'var') || isempty(numbers)
@@ -25,9 +27,9 @@ start_time = tic;
 
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = wang(matrix, T);                %#ok<AGROW>
+    features(i,:) = feature_extract(matrix, feature_type, T);               %#ok<AGROW>
 end
 
 end_time = toc(start_time);
 
-fprintf('Wang feature extraction completes, T = %d, runtime: %.2fs\n', T, end_time);
+fprintf('%s feature extraction completes, T = %d, runtime: %.2fs\n', feature_type, T, end_time);

@@ -1,5 +1,6 @@
-%% wang new feature extraction in batch
+%% wang features extraction in batch
 %
+% - features = feature_wang_batch(matrixs, T)
 % - Variable:
 % ------------------------------------------input
 % matrixs           QMDCT coefficients matrix
@@ -9,12 +10,12 @@
 % -----------------------------------------output
 % features          feature dimension
 
-function features = wang_new_batch(matrixs, T, numbers)
+function features = feature_wang_batch(matrixs, T, numbers)
 
 total_number = size(matrixs, 3);
 
 if ~exist('T', 'var') || isempty(T)
-    T = 15;
+    T = 3;
 end
 
 if ~exist('numbers', 'var') || isempty(numbers)
@@ -25,9 +26,9 @@ start_time = tic;
 
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = wang_new(matrix, T);                                    %#ok<AGROW>
+    features(i,:) = wang(matrix, T);                %#ok<AGROW>
 end
 
 end_time = toc(start_time);
 
-fprintf('Wang new feature extraction completes, T = %d, runtime: %.2fs\n', T, end_time);
+fprintf('Wang feature extraction completes, T = %d, runtime: %.2fs\n', T, end_time);

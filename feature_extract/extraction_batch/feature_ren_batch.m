@@ -1,6 +1,6 @@
-%% ren feature extraction in batch
+%% ren features extraction in batch
 %
-% - features = ren_batch(matrixs, T)
+% - features = feature_ren_batch(matrixs, T)
 % - Variable:
 % ------------------------------------------input
 % matrixs           QMDCT coefficients matrix
@@ -10,12 +10,12 @@
 % -----------------------------------------output
 % features          feature dimension
 
-function features = ren_batch(matrixs, T, numbers)
+function features = feature_ren_batch(matrixs, T, numbers)
 
 total_number = size(matrixs, 3);
 
 if ~exist('T', 'var') || isempty(T)
-    T = 15;
+    T = 4;
 end
 
 if ~exist('numbers', 'var') || isempty(numbers)
@@ -27,7 +27,7 @@ start_time = tic;
 feature_dim = 4*2*(2*T+1)^2*2;
 features = zeros(numbers, feature_dim);
 
-for i = 1 : numbers
+for i = 1:numbers
     matrix = matrixs(:, :, i);
     features(i, :) = ren(matrix, T);
 end
