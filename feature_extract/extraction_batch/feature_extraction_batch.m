@@ -1,6 +1,6 @@
 %% features extraction in batch
 %
-% - features = feature_extract_batch(matrixs, T)
+% - features = feature_extraction_batch(matrixs, T)
 % - Variable:
 % ------------------------------------------input
 % matrixs           QMDCT coefficients matrix
@@ -11,7 +11,7 @@
 % -----------------------------------------output
 % features          features
 
-function features = feature_extract_batch(matrixs, feature_type, T, numbers)
+function features = feature_extraction_batch(matrixs, feature_type, T, numbers)
 
 total_number = size(matrixs, 3);
 
