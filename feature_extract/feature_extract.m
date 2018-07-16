@@ -24,5 +24,5 @@ if ~exist('T', 'var') || isempty(T)
     end
 end
 
-command = ['feature = ', feature_type, '(matrix, T)'];
+command = ['feature = feature_', feature_type, '(matrix, T);'];
 eval(command);
