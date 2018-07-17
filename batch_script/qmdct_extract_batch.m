@@ -30,7 +30,7 @@ start_time = tic;
 if text_nums ~= 0
     for i = 1:text_nums
         text_file_path = fullfile(text_files_path, files_list{i});
-        QMDCTs(:,:,i)   = load(text_file_path);                         %#ok<AGROW>
+        QMDCTs(:,:,i)   = load(text_file_path);                             %#ok<AGROW>
     end
     
     QMDCTs = QMDCTs(:,1:QMDCT_num,:);
