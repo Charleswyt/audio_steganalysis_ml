@@ -27,7 +27,7 @@ start_time = tic;
 
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = feature_extract(matrix, feature_type, T);               %#ok<AGROW>
+    features(i,:) = feature_extraction(matrix, feature_type, T);            %#ok<AGROW>
 end
 
 end_time = toc(start_time);

@@ -1,6 +1,6 @@
-%% selection of input matrices
+%% selection of thereshold value
 
-% - features = wang_matrices_select(matrix, T)
+% - features = threshold_selection(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -17,9 +17,8 @@
 %   'abs_dif1_v'        1st order absolute difference in vertical direction
 %   'abs_dif2_h'        2nd order absolute difference in horizontal direction
 %   'abs_dif2_v'        2nd order absolute difference in vertical direction
-%   'interval'          interval subtraction with stride 2
 
-function features = wang_matrices_select(matrix, T)
+function features = threshold_selection(matrix, T)
 
 % preprocessing of QMDCT matrix
 matrix_dif_c_1 = pre_process_matrix(matrix, 'dif1_h');
