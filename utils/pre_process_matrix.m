@@ -21,7 +21,8 @@
 %   'abs_dif1_v'        1st order absolute difference in vertical direction     |Qi,j| - |Qi+1,j|
 %   'abs_dif2_h'        2nd order absolute difference in horizontal direction   |Qi,j| - 2 * |Qi,j+1| + |Qi,j+2|
 %   'abs_dif2_v'        2nd order absolute difference in vertical direction     |Qi,j| - 2 * |Qi+1,j| + |Qi+2,j|
-%   'interval'          interval subtraction with stride 2
+%   'interval_row'      interval subtraction with stride 2 in row direction
+%   'interval_col'      interval subtraction with stride 2 in col direction
 % -----------------------------------------output
 % new_matrix            the processed matrix
 
@@ -58,20 +59,56 @@ elseif strcmp(method, 'abs_dif2_v') == 1
     matrix = abs(matrix);
     new_matrix = diff(matrix, 2, 1);
     
-elseif strcmp(method, 'interval') == 1
-    new_matrix = interval_subtraction(matrix);
+elseif strcmp(method, 'interval_col') == 1
+    new_matrix = interval_subtraction_col(matrix);
+elseif strcmp(method, 'interval_row') == 1
+    new_matrix = interval_subtraction_row(matrix);
+
+elseif strcmp(method, 'kv') == 1
+    new_matrix = kv_process(matrix);
+
 else
     new_matrix = matrix;
 end
 
-function new_matrix = interval_subtraction(matrix)
+end
+
 % - Variable:
 % ------------------------------------------input
 % matrix                matrix
 % -----------------------------------------output
 % new_matrix            the processed matrix
+function new_matrix = interval_subtraction_col(matrix)
 
 width = size(matrix, 2);
 for i = 1:width - 2
     new_matrix(:,i) = matrix(:, i + 2) - matrix(:, i);                      %#ok<AGROW>
+end
+
+end
+
+% - Variable:
+% ------------------------------------------input
+% matrix                matrix
+% -----------------------------------------output
+% new_matrix            the processed matrix
+function new_matrix = interval_subtraction_row(matrix)
+
+height = size(matrix, 1);
+for i = 1:height - 2
+    new_matrix(i,:) = matrix(i + 2, :) - matrix(i, :);                      %#ok<AGROW>
+end
+
+end
+
+% - Variable:
+% ------------------------------------------input
+% matrix                matrix
+% -----------------------------------------output
+% new_matrix            the processed matrix
+function new_matrix = kv_process(matrix)
+    
+kv_kernel = [-1,2,-2,2,-1; 2,-6,8,-6,2; -2,8,-12,8,-2; 2,-6,8,-6,2; -1, 2, -2, 2, -1];
+new_matrix = imfilter(matrix, kv_kernel);
+
 end
