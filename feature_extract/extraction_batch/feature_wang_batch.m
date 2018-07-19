@@ -26,7 +26,7 @@ start_time = tic;
 
 for i = 1:numbers
     matrix = matrixs(:,:,i);
-    features(i,:) = wang(matrix, T);                %#ok<AGROW>
+    features(i,:) = feature_wang(matrix, T);                %#ok<AGROW>
 end
 
 end_time = toc(start_time);

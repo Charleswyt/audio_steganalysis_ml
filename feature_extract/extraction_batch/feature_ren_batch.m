@@ -29,7 +29,7 @@ features = zeros(numbers, feature_dim);
 
 for i = 1:numbers
     matrix = matrixs(:, :, i);
-    features(i, :) = ren(matrix, T);
+    features(i, :) = feature_ren(matrix, T);
 end
 
 end_time = toc(start_time);
