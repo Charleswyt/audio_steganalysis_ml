@@ -43,7 +43,7 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 0 -t 2 -c 1024 -g 0.015'; %1024, 0.0313
+        svm_params = '-s 1 -t 0 -c 2048 -g 0.00513'; %1024, 0.0313
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
