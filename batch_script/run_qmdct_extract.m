@@ -2,8 +2,8 @@
 
 width = [2, 3];
 bitrate = [128, 192, 256, 320];
-embedding_rate = [1, 3, 5, 8, 10];
-stego_method = {'EECS', 'HCM'};
+embedding_rate = [3, 5, 8, 10];
+stego_method = {'MP3Stego', 'EECS', 'HCM'};
 
 QMDCT_num = 576;
 text_nums = 1000;
@@ -35,9 +35,9 @@ for s = 1:length(stego_method)
             if strcmp(stego_method{s}, 'EECS')
                 for w = 1:length(width)
                     if embedding_rate(e) == 10
-                        stego_files_name = [stego_method{s}, '_W_', num2str(width(w)), '_B_', num2str(bitrate(b)), '_ER_', num2str(embedding_rate(e))];
+                        stego_files_name = [stego_method{s}, '_B_', num2str(bitrate(b)), '_W_', num2str(width(w)), '_H_7_ER_', num2str(embedding_rate(e))];
                     else
-                        stego_files_name = [stego_method{s}, '_W_', num2str(width(w)), '_B_', num2str(bitrate(b)), '_ER_0', num2str(embedding_rate(e))];
+                        stego_files_name = [stego_method{s}, '_B_', num2str(bitrate(b)), '_W_', num2str(width(w)), '_H_7_ER_0', num2str(embedding_rate(e))];
                     end
                     stego_files_path  = fullfile(steog_dir, stego_method{s}, stego_files_name);
                     stego_mat_path = [fullfile(data_stego_mat_dir, stego_method{s}, stego_files_name), '.mat'];
