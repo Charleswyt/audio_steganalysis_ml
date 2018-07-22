@@ -2,10 +2,10 @@
 %       via euclidean distance, cosine similarity, Pearson correlation and Kullback-Leibler divergence
 %#ok<*SEPEX>
 
-T = 3;
+T = 5;
 preprocessing_methods = {'origin', 'dif1_h', 'dif1_v', 'dif2_h', 'dif2_v', 'abs_dif1_h', 'abs_dif1_v', 'abs_dif2_h', 'abs_dif2_v'};
 
-file_num = 1;
+file_num = 50;
 
 data_cover_path = 'E:\Myself\2.database\mtap\txt\cover\128';
 data_stego_path = 'E:\Myself\2.database\mtap\txt\stego\EECS\EECS_W_2_B_128_ER_05';
@@ -27,16 +27,16 @@ for i = 1:length(preprocessing_methods)
         
         euclidean_distance  = euclidean_distance + distance.euclidean_distance;
         cosine = cosine + distance.cosine;
-        pearson_correlation = pearson_correlation + distance.pearson_correlation;
-        KL = KL + distance.KL;
+%         pearson_correlation = pearson_correlation + distance.pearson_correlation;
+%         KL = KL + distance.KL;
     end
     
     fprintf('=============================\n');
     fprintf('%s:\n', preprocessing_method);
-    fprintf('Euclidean Distance : %.3f\n', euclidean_distance / file_num);
-    fprintf('Cosine Similarity  : %.3f\n', cosine / file_num);
-    fprintf('Pearson Correlation: %.3f\n', pearson_correlation / file_num);
-    fprintf('Kullback¨CLeibler divergence: %.3f\n', KL / file_num);
+    fprintf('Euclidean Distance : %.5f\n', euclidean_distance / file_num);
+    fprintf('Cosine Similarity  : %.5f\n', cosine / file_num);
+%     fprintf('Pearson Correlation: %.5f\n', pearson_correlation / file_num);
+%     fprintf('Kullback¨CLeibler divergence: %.5f\n', KL / file_num);
 end
 
 % distance = get_distance(matrix_cover, matrix_stego, preprocessing_method, T)
@@ -56,14 +56,19 @@ function distance = get_distance(matrix_cover, matrix_stego, preprocessing_metho
 if strcmp(preprocessing_method, 'origin') new_matrix_cover = matrix_cover;new_matrix_stego = matrix_stego;end
 
 if strcmp(preprocessing_method, 'dif1_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif1_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif1_h');end
-if strcmp(preprocessing_method, 'dif1_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif1_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif1_h');end
-if strcmp(preprocessing_method, 'dif2_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif2_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif1_h');end
-if strcmp(preprocessing_method, 'dif2_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif2_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif1_h');end
+if strcmp(preprocessing_method, 'dif1_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif1_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif1_v');end
+if strcmp(preprocessing_method, 'dif2_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif2_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif2_h');end
+if strcmp(preprocessing_method, 'dif2_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'dif2_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'dif2_v');end
 
 if strcmp(preprocessing_method, 'abs_dif1_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif1_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif1_h');end
-if strcmp(preprocessing_method, 'abs_dif1_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif1_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif1_h');end
-if strcmp(preprocessing_method, 'abs_dif2_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif2_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif1_h');end
-if strcmp(preprocessing_method, 'abs_dif2_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif2_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif1_h');end
+if strcmp(preprocessing_method, 'abs_dif1_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif1_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif1_v');end
+if strcmp(preprocessing_method, 'abs_dif2_h') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif2_h');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif2_h');end
+if strcmp(preprocessing_method, 'abs_dif2_v') new_matrix_cover = pre_process_matrix(matrix_cover, 'abs_dif2_v');new_matrix_stego = pre_process_matrix(matrix_stego, 'abs_dif2_v');end
+
+if strcmp(preprocessing_method, 'interval_row') new_matrix_cover = pre_process_matrix(matrix_cover, 'interval_row');new_matrix_stego = pre_process_matrix(matrix_stego, 'interval_row');end
+if strcmp(preprocessing_method, 'interval_col') new_matrix_cover = pre_process_matrix(matrix_cover, 'interval_col');new_matrix_stego = pre_process_matrix(matrix_stego, 'interval_col');end
+
+if strcmp(preprocessing_method, 'kv') new_matrix_cover = pre_process_matrix(matrix_cover, 'kv');new_matrix_stego = pre_process_matrix(matrix_stego, 'kv');end
 
 % feature extraction
 feature_cover = get_point_block_markov(new_matrix_cover, T);
@@ -85,7 +90,7 @@ denominator = sqrt(sum(feature_cover_new.^2)) * sqrt(sum(feature_stego_new.^2));
 distance.pearson_correlation = numerator / denominator;
 
 % Kullback-Leibler divergence
-H = sum(feature_cover.*log(feature_cover./feature_stego));
-distance.KL = H / 6 * (2*T+1);
+H = sum(feature_cover.*log(feature_cover./(feature_stego+eps)));
+distance.KL = H / (6 * (2*T+1));
 
 end
