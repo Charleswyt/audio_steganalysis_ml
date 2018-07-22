@@ -23,6 +23,7 @@
 %   'abs_dif2_v'        2nd order absolute difference in vertical direction     |Qi,j| - 2 * |Qi+1,j| + |Qi+2,j|
 %   'interval_row'      interval subtraction with stride 2 in row direction
 %   'interval_col'      interval subtraction with stride 2 in col direction
+%   'kv'                imfilter with kv kernel
 % -----------------------------------------output
 % new_matrix            the processed matrix
 
