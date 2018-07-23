@@ -1,6 +1,6 @@
 %% QMDCT coefficients matrix load from txt files
 
-width = [2, 3];
+width = [2, 3, 4, 5];
 bitrate = [128, 192, 256, 320];
 embedding_rate = [3, 5, 8, 10];
 stego_method = {'MP3Stego', 'EECS', 'HCM'};

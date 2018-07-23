@@ -10,7 +10,7 @@ embedding_rate = [3, 5, 8, 10];
 feature_cover_mat_dir = 'E:\Myself\2.database\mtap\feature_mat\cover';
 feature_stego_mat_dir = 'E:\Myself\2.database\mtap\feature_mat\stego';
 
-result_file_path = 'results_EECS.txt';
+result_file_path = 'results.txt';
 fid = fopen(result_file_path, 'w');
 
 for f = 1:length(feature_type)

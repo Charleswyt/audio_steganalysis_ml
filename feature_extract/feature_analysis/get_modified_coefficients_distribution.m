@@ -4,9 +4,11 @@ close all;
 threshold = 15;
 bitrate = [128, 192, 256, 320];
 figure(1);
+
+matrix_file_name = 'wav10s_00003.txt';
 for i = 1:length(bitrate)
-    cover_file_path = ['E:\Myself\2.database\mtap\txt\cover\', num2str(bitrate(i)), '\wav10s_00003.txt'];
-    stego_file_path = ['E:\Myself\2.database\mtap\txt\stego\EECS\EECS_W_2_B_', num2str(bitrate(i)), '_ER_10\wav10s_00003_stego_', num2str(bitrate(i)), '.txt'];
+    cover_file_path = fullfile('E:\Myself\2.database\mtap\txt\cover', num2str(bitrate(i)), matrix_file_name);
+    stego_file_path = fullfile('E:\Myself\2.database\mtap\txt\stego\EECS', ['EECS_B_', num2str(bitrate(i)), '_W_2_H_7_ER_10'], matrix_file_name);
 %     stego_file_path = ['E:\Myself\2.database\mtap\txt\stego\HCM\HCM_B_', num2str(bitrate(i)), '_ER_10\wav10s_00003.txt'];
     
 %     cover_file_path = ['E:\Myself\2.database\mtap\mp3\cover\mp3stego_', num2str(bitrate(i)), '\wav10s_00001.txt'];
