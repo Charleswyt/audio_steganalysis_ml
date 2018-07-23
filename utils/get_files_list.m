@@ -1,6 +1,6 @@
 %% Get a list of filenames with extension
 % [files_list, files_num] = get_files_list(files_path, files_type)
-% - Variable：
+% - Variable
 % ------------------------------------------input
 % files_path        The file path
 % file_type         The file type, default: mp3
