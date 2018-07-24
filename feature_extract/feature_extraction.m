@@ -1,4 +1,4 @@
-%% Wang-Markov
+%% feature extractor
 % - feature = feature_extraction(matrix, feature_type, T)
 % - Variable:
 % ------------------------------------------input
@@ -11,7 +11,7 @@
 function feature = feature_extraction(matrix, feature_type, T)
 
 if ~exist('feature_type', 'var') || isempty(feature_type)
-    feature_type = 'wang';
+    feature_type = 'jpbc';
 end
 
 if ~exist('T', 'var') || isempty(T)
@@ -19,8 +19,10 @@ if ~exist('T', 'var') || isempty(T)
         T = 6;
     elseif strcmp(feature_type, 'ren')
         T = 4;
-    else
+    elseif strcmp(feature_type, 'wang')
         T = 3;
+    else
+        T = 5;
     end
 end
 
@@ -28,6 +30,10 @@ if strcmp(feature_type, 'jin')
     feature = feature_jin(matrix, T);
 elseif strcmp(feature_type, 'ren')
     feature = feature_ren(matrix, T);
-else
+elseif strcmp(feature_type, 'wang')
     feature = feature_wang(matrix, T);
+elseif strcmp(feature_type, 'new')
+    feature = feature_new(matrix, T);
+else
+    feature = feature_jpbc(matrix, T);
 end

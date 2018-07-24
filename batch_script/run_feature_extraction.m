@@ -1,7 +1,7 @@
 %% feature extraction
 
 stego_method = {'MP3Stego', 'HCM', 'EECS'};
-feature_type = {'jin', 'ren', 'wang'};
+feature_type = {'jin', 'ren', 'jpbc'};
 T = [6, 4, 5];
 
 QMDCT_num = 500;
