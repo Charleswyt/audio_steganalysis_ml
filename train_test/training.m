@@ -43,7 +43,7 @@ end
 
 if ~exist('svm_params', 'var') || isempty(svm_params)
     if strcmp(seek_best_params, 'False')
-        svm_params = '-s 1 -t 0 -c 2048 -g 0.00513'; %1024, 0.0313
+        svm_params = '-s 1 -t 0 -c 2048 -g 0.00513 -b 1'; %1024, 0.0313
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature);
         svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
@@ -76,7 +76,7 @@ test_label  = merge(train_set_number+1:end, feature_dimension+1);           % te
 model = libsvmtrain(train_label, train_data, svm_params);
 
 %% SVM validation
-[predict, ~, prob] = libsvmpredict(test_label, test_data, model);
+[predict, ~, prob] = libsvmpredict(test_label, test_data, model, '-b 1');
 ground_truth  = test_label;
 
 FP = sum(test_label == -1 & predict ==  1);                                 % False Positive
