@@ -78,14 +78,6 @@ model = libsvmtrain(train_label, train_data, svm_params);
 %% SVM validation
 [predict, ~, prob] = libsvmpredict(test_label, test_data, model, '-b 1');
 
-cover_prob = prob(:,1);stego_prob = prob(:,2);
-single_likelihood_ratio = log(cover_prob ./ stego_prob + eps);
-multi_likelihood_ratio = 1;
-for j = 1:50
-    multi_likelihood_ratio = multi_likelihood_ratio * single_likelihood_ratio(j);
-end
-fprintf('multi_likelihood_ratio: %.2f\n', multi_likelihood_ratio);
-
 ground_truth  = test_label;
 
 FP = sum(test_label == -1 & predict ==  1);                                 % False Positive

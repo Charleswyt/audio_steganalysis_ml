@@ -15,11 +15,8 @@ function tutorial()
 % Load prepared cover/stego features. These features correspond to CC-PEV
 % features extracted from nsF5 steganography at payload 0.2 bpac. Used JPEG
 % quality factor = 75.
-% cover = load('example/cover.mat');
-% stego = load('example/stego.mat');
-
-cover = load('E:\Myself\2.database\mtap\feature_mat\cover\wang\128');
-stego = load('E:\Myself\2.database\mtap\feature_mat\stego\HCM\wang\HCM_B_128_ER_10');
+cover = load('example/cover.mat');
+stego = load('example/stego.mat');
 
 % Both loaded structures contain fields 'F' and 'names'. F is a feature
 % matrix with individual samples in rows and individual features in
