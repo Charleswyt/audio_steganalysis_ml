@@ -46,7 +46,7 @@ if ~exist('svm_params', 'var') || isempty(svm_params)
         svm_params = '-s 1 -t 0 -c 2048 -g 0.00513 -b 1'; %1024, 0.0313
     elseif strcmp(seek_best_params, 'True')
         [best_acc, best_t, bestc, bestg] = get_best_params(cover_feature, stego_feature);
-        svm_params = ['-s 0 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg)];
+        svm_params = ['-s 1 -t ', num2str(best_t), '-c ', num2str(bestc), ' -g ', num2str(bestg), ' -b 1'];
     end
 end
 
@@ -77,6 +77,15 @@ model = libsvmtrain(train_label, train_data, svm_params);
 
 %% SVM validation
 [predict, ~, prob] = libsvmpredict(test_label, test_data, model, '-b 1');
+
+cover_prob = prob(:,1);stego_prob = prob(:,2);
+single_likelihood_ratio = log(cover_prob ./ stego_prob + eps);
+multi_likelihood_ratio = 1;
+for j = 1:50
+    multi_likelihood_ratio = multi_likelihood_ratio * single_likelihood_ratio(j);
+end
+fprintf('multi_likelihood_ratio: %.2f\n', multi_likelihood_ratio);
+
 ground_truth  = test_label;
 
 FP = sum(test_label == -1 & predict ==  1);                                 % False Positive
