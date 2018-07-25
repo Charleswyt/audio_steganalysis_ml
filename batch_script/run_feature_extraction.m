@@ -44,7 +44,7 @@ for s = 1:length(stego_method)
             for f = 1:length(feature_type)
                 feature_stego_mat_path = fullfile(feature_stego_mat_dir, stego_method{s}, feature_type{f});
                 if ~exist(feature_stego_mat_path, 'file')
-                	kdir(feature_stego_mat_path);
+                	mkdir(feature_stego_mat_path);
                 end
                 features_file_path = fullfile(feature_stego_mat_path, stego_files_list{fn});
                 if ~exist(features_file_path, 'file')
