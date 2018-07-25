@@ -6,12 +6,10 @@ cover_audio = audioread('E:\Myself\2.database\3.cover\cover_10s\128\wav10s_00004
 stego_audio = audioread('E:\Myself\2.database\4.stego\EECS\128_W_4_H_7_ER_10\train\wav10s_00004.mp3');
 dif_audio = cover_audio - stego_audio;
 
-cover_QMDCT = load('E:\Myself\2.database\10.QMDCT\1.txt\cover\128\wav10s_00004.txt');
-stego_QMDCT = load('E:\Myself\2.database\10.QMDCT\1.txt\EECS\128_W_4_H_7_ER_10\wav10s_00004.txt');
+cover_QMDCT = load('E:\Myself\2.database\mtap\txt\cover\128\wav10s_00004.txt');
+stego_QMDCT = load('E:\Myself\2.database\mtap\txt\stego\EECS\EECS_B_128_W_2_H_7_ER_10\wav10s_00004.txt');
 dif_QMDCT = cover_QMDCT - stego_QMDCT;
 dif = dif_QMDCT(:,1:380);
-
-dif(dif ~= 0) = 255;
 
 figure(1);
 subplot(211);
