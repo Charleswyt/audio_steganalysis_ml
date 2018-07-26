@@ -26,7 +26,7 @@ for s = 1:length(stego_method)
         cover_mat_path = [fullfile(data_cover_mat_dir, cover_files_name), '.mat'];
         if ~exist(cover_mat_path, 'file')
             QMDCT = qmdct_extract_batch(cover_files_path, QMDCT_num, text_nums);
-            if all(all(QMDCT)) == 1
+            if size(QMDCT,3) == text_nums
                 save(cover_mat_path, 'QMDCT');
                 fprintf('QMDCT coefficients - %s completes.\n', cover_files_path);
             end
@@ -45,7 +45,7 @@ for s = 1:length(stego_method)
                     stego_mat_path = [fullfile(data_stego_mat_dir, stego_method{s}, stego_files_name), '.mat'];
                     if ~exist(stego_mat_path, 'file')
                         QMDCT = qmdct_extract_batch(stego_files_path, QMDCT_num, text_nums);
-                        if all(all(QMDCT)) == 1
+                        if size(QMDCT,3) == text_nums
                             save(stego_mat_path, 'QMDCT');
                             fprintf('QMDCT coefficients - %s completes.\n', stego_files_name);
                         end
@@ -61,7 +61,7 @@ for s = 1:length(stego_method)
                 stego_mat_path = [fullfile(data_stego_mat_dir, stego_method{s}, stego_files_name), '.mat'];
                 if ~exist(stego_mat_path, 'file')
                     QMDCT = qmdct_extract_batch(stego_files_path, QMDCT_num, text_nums);
-                    if all(all(QMDCT)) == 1
+                    if QMDCT ~= -1
                         save(stego_mat_path, 'QMDCT');
                         fprintf('QMDCT coefficients - %s completes.\n', stego_files_name);
                     end
