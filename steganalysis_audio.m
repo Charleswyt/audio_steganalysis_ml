@@ -53,20 +53,31 @@ stego_label = ones(sample_num_stego, 1);                                    % st
 cover_data = [cover_feature, cover_label];                                  % cover data [feature, label]
 stego_data = [stego_feature, stego_label];                                  % stego data [feature, label]
 merge = [cover_data; stego_data];                                           % data and label pair
-merge = shuffle(merge);                                                     % data shuffle
 
-data  = merge(:, 1:feature_dimension);                                      % training data
-label = merge(:, feature_dimension+1);                                      % training label
-predict = libsvmpredict(label, data, model);
+fpr = zeros(1, 10);
+fnr = zeros(1, 10);
+acc = zeros(1, 10);
 
-FP = sum(label == -1 & predict ==  1);                                      % False Positive
-FN = sum(label ==  1 & predict == -1);                                      % False Negative
-TP = sum(label ==  1 & predict ==  1);                                      % True  Positive
-TN = sum(label == -1 & predict == -1);                                      % True  Positive
+for i = 1:10
+    merge = shuffle(merge);                                                     % data shuffle
 
-FPR = FP / (FP + TN);                                                       % False Positive Rate
-FNR = FN / (TP + FN);                                                       % False Negative Rate
-ACC = 1 - ((FPR + FNR) / 2);                                                % Accuracy
+    data  = merge(1:100, 1:feature_dimension);                                      % training data
+    label = merge(1:100, feature_dimension+1);                                      % training label
+    predict = libsvmpredict(label, data, model, '-b 1');
+
+    FP = sum(label == -1 & predict ==  1);                                      % False Positive
+    FN = sum(label ==  1 & predict == -1);                                      % False Negative
+    TP = sum(label ==  1 & predict ==  1);                                      % True  Positive
+    TN = sum(label == -1 & predict == -1);                                      % True  Positive
+
+    fpr(i) = FP / (FP + TN);                                                       % False Positive Rate
+    fnr(i) = FN / (TP + FN);                                                       % False Negative Rate
+    acc(i) = 1 - ((fpr(i) + fnr(i)) / 2);                                                % Accuracy
+end
+
+FPR = mean(fpr);
+FNR = mean(fnr);
+ACC = mean(acc);
 
 % display the result
 if strcmp(algorithm, 'MP3Steog') || strcmp(algorithm, 'HCM')
