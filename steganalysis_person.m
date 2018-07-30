@@ -78,7 +78,6 @@ for i = 1:times
         TN = TN + 1;
     end
 end
-TP, TN
 FPR = FP / (FP + TN + eps);                                                 % False Positive Rate
 FNR = FN / (TP + FN + eps);                                                 % False Negative Rate
 ACC = 1 - ((FPR + FNR) / 2);                                                % Accuracy
