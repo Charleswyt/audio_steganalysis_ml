@@ -1,8 +1,8 @@
 %% calculate likelihood ratio for steganography
 
-% model_file_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\models\stego.mat';
-% multi_likelihood_ratio_cover = get_likelihood_ratio_cover(cover_feature, model_file_path);
-% multi_likelihood_ratio_stego = get_likelihood_ratio_stego(cover_feature, stego_feature, model_file_path);
+model_file_path = 'E:\Myself\1.source_code\audio_steganalysis_ml\models\stego.mat';
+multi_likelihood_ratio_cover = get_likelihood_ratio_cover(cover_feature, model_file_path);
+multi_likelihood_ratio_stego = get_likelihood_ratio_stego(cover_feature, stego_feature, model_file_path);
 
 %% get_likelihood_ratio_stego
 % - multi_likelihood_ratio_stego = get_likelihood_ratio_stego(cover_feature, stego_feature, model_file_path)
