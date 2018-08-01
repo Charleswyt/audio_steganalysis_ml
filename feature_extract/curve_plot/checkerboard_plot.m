@@ -4,10 +4,11 @@
 % ------------------------------------------input
 % matrix            input data
 % side              side length of checkboard
+% title_name        title of checkerboard figure
 % -----------------------------------------output
 % Null
 
-function checkerboard_plot(matrix, side)
+function checkerboard_plot(matrix, side, title_name)
 
 if ~exist('side', 'var') || isempty(side)
     shape = size(matrix);
@@ -31,3 +32,4 @@ set(gca, ...
     'TickLength',[0 0]);
 xlabel('Q_{ij}', 'FontSize', 12);
 ylabel('Q_{ij}', 'FontSize', 12);
+title(title_name);
