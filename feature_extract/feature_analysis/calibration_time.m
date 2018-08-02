@@ -28,18 +28,22 @@ if ~exist('stego_audio_file_calibration', 'var') || isempty(stego_audio_file_cal
     stego_audio_file_calibration = 'audio_file/c_stego.mp3';
 end
 
+% audio read
 cover_audio_original = audioread(cover_audio_file_original);
 stego_audio_original = audioread(stego_audio_file_original);
 cover_audio_calibration = audioread(cover_audio_file_calibration);
 stego_audio_calibration = audioread(stego_audio_file_calibration);
 
+% get difference
 dif_original = cover_audio_original - stego_audio_original;
 dif_calibration = cover_audio_calibration - stego_audio_calibration;
 dif = dif_original - dif_calibration;
 
+% length for display (just show audio signal of 50 frames)
 fs = 44100;
 duration = round(50 * 10 / 384 * fs);
 
+% plot
 figure(1);
 subplot(211);
 plot(dif_original(1:duration,1));
