@@ -30,36 +30,36 @@ if ~exist('order', 'var') || isempty(order)
 end
 
 % distance calculation
-if strcmp(distance_type, 'Euclidean') || distance_type == 1
+if strcmp(distance_type, 'Euclidean') || (isnumeric(distance_type) && distance_type == 1)
     distance = sqrt(sum((vector1 - vector2).^2));
-elseif strcmp(distance_type, 'Manhattan') || distance_type == 2
+elseif strcmp(distance_type, 'Manhattan') || (isnumeric(distance_type) && distance_type == 2)
     distance = sum(abs(vector1 - vector2));
-elseif strcmp(distance_type, 'Chebyshev') || distance_type == 3
+elseif strcmp(distance_type, 'Chebyshev') || (isnumeric(distance_type) && distance_type == 3)
     distance = max(abs(vector1 - vector2));
-elseif strcmp(distance_type, 'Minkowski') || distance_type == 4
+elseif strcmp(distance_type, 'Minkowski') || (isnumeric(distance_type) && distance_type == 4)
     distance = power(sum(power((abs(vector1 - vector2)), order)), 1/order);
-elseif strcmp(distance_type, 'Std_Euclidean') || distance_type == 5
+elseif strcmp(distance_type, 'Std_Euclidean') || (isnumeric(distance_type) && distance_type == 5)
     mean_vector1 = mean(vector1);mean_vector2 = mean(vector2);
     std_vector1 = std(vector1);std_vector2 = std(vector2);
     vector1_norm = (vector1 - mean_vector1) / std_vector1;
     vector2_norm = (vector2 - mean_vector2) / std_vector2;
     distance = sqrt(sum((vector1_norm - vector2_norm).^2));
-elseif strcmp(distance_type, 'Cosine') || distance_type == 6
+elseif strcmp(distance_type, 'Cosine') || (isnumeric(distance_type) && distance_type == 6)
     distance = sum(vector1 .* vector2) / sum(vector1.^2) / sum(vector2.^2);
-elseif strcmp(distance_type, 'Pearson') || distance_type == 7
+elseif strcmp(distance_type, 'Pearson') || (isnumeric(distance_type) && distance_type == 7)
     mean_vector1 = mean(vector1);mean_vector2 = mean(vector2);
     vector1_new = vector1 - mean_vector1;
     vector2_new = vector2 - mean_vector2;
     distance = sum(vector1_new .* vector2_new) / sum(vector1_new.^2) / sum(vector2_new.^2);
-elseif strcmp(distance_type, 'Hamming') || distance_type == 8
+elseif strcmp(distance_type, 'Hamming') || (isnumeric(distance_type) && distance_type == 8)
     if isempty(rem(vector1, 1)) ~= 0 || isempty(rem(vector2, 1)) ~= 0
         distance = -1;
     else
         distance = length(find(vector1 - vector2 ~= 0));
     end
-elseif strcmp(distance_type, 'Jaccard') || distance_type == 9
+elseif strcmp(distance_type, 'Jaccard') || (isnumeric(distance_type) && distance_type == 9)
     distance = (length(union(vector1, vector2)) - length(intersect(vector1, vector2))) / length(union(vector1, vector2));
-elseif strcmp(distance_type, 'Bray_Curtis') || distance_type == 10
+elseif strcmp(distance_type, 'Bray_Curtis') || (isnumeric(distance_type) && distance_type == 10)
     distance = sum(abs(vector1 - vector2)) / (sum(vector1) + sum(vector2));
 else
     distance = -1;
