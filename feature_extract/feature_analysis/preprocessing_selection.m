@@ -3,12 +3,11 @@
 %#ok<*SEPEX>
 
 T = 5;
+file_num = 1;
+
 preprocessing_methods = {'origin', 'dif1_h', 'dif1_v', 'dif2_h', 'dif2_v', 'abs_dif1_h', 'abs_dif1_v', 'abs_dif2_h', 'abs_dif2_v'};
-
-file_num = 50;
-
 data_cover_path = 'E:\Myself\2.database\mtap\txt\cover\128';
-data_stego_path = 'E:\Myself\2.database\mtap\txt\stego\EECS\EECS_W_2_B_128_ER_05';
+data_stego_path = 'E:\Myself\2.database\mtap\txt\stego\EECS\EECS_B_128_W_2_H_7_ER_10';
 
 [cover_files_list, ~] = get_files_list(data_cover_path, 'txt');
 [stego_files_list, ~] = get_files_list(data_stego_path, 'txt');
@@ -27,16 +26,16 @@ for i = 1:length(preprocessing_methods)
         
         euclidean_distance  = euclidean_distance + distance.euclidean_distance;
         cosine = cosine + distance.cosine;
-%         pearson_correlation = pearson_correlation + distance.pearson_correlation;
-%         KL = KL + distance.KL;
+        pearson_correlation = pearson_correlation + distance.pearson_correlation;
+        KL = KL + distance.KL;
     end
     
     fprintf('=============================\n');
     fprintf('%s:\n', preprocessing_method);
     fprintf('Euclidean Distance : %.5f\n', euclidean_distance / file_num);
     fprintf('Cosine Similarity  : %.5f\n', cosine / file_num);
-%     fprintf('Pearson Correlation: %.5f\n', pearson_correlation / file_num);
-%     fprintf('Kullback¨CLeibler divergence: %.5f\n', KL / file_num);
+    fprintf('Pearson Correlation: %.5f\n', pearson_correlation / file_num);
+    fprintf('Kullback¨CLeibler divergence: %.5f\n', KL / file_num);
 end
 
 % distance = get_distance(matrix_cover, matrix_stego, preprocessing_method, T)
@@ -75,22 +74,15 @@ feature_cover = get_point_block_markov(new_matrix_cover, T);
 feature_stego = get_point_block_markov(new_matrix_stego, T);
 
 % euclidean distance
-distance.euclidean_distance = sqrt(sum((feature_cover - feature_stego).^2));
+distance.euclidean_distance = get_vector_distance(feature_cover, feature_stego, 'Euclidean');
 
 % cosine similarity
-numerator = sum(feature_cover.*feature_stego);
-denominator = sqrt(sum(feature_cover.^2)) * sqrt(sum(feature_stego.^2));
-distance.cosine = numerator / denominator;
+distance.cosine = get_vector_distance(feature_cover, feature_stego, 'Cosine');
 
 % Pearson correlation
-feature_cover_new = feature_cover - mean(feature_cover);
-feature_stego_new = feature_stego - mean(feature_stego);
-numerator = sum(feature_cover_new.*feature_stego_new);
-denominator = sqrt(sum(feature_cover_new.^2)) * sqrt(sum(feature_stego_new.^2));
-distance.pearson_correlation = numerator / denominator;
+distance.pearson_correlation = get_vector_distance(feature_cover, feature_stego, 'Pearson');
 
 % Kullback-Leibler divergence
-H = sum(feature_cover.*log(feature_cover./(feature_stego+eps)));
-distance.KL = H / (6 * (2*T+1));
+distance.KL = get_prob_vector_distance(feature_cover, feature_stego, 'Relative_Entropy');
 
 end
