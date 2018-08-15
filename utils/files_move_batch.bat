@@ -1,0 +1,1 @@
+python3 .\files_move.py E:\Myself\2.database\3.cover\cover_10s\128 E:\Myself\2.database\10.QMDCT\cover\cover_10s\128
