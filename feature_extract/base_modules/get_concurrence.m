@@ -11,8 +11,6 @@
 
 function concurence_matrix = get_concurrence(matrix, T, direction, order, level)
 
-
-
 % default parameters
 if ~exist('T', 'var') || isempty(T)
     T = 15;
