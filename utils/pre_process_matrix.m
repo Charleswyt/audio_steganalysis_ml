@@ -12,6 +12,12 @@
 %                              ...
 %                       Q200,1 Q200,2 ... Q200,576
 %                                                  ]
+%   usage of diff:
+%       Y = diff(X, n, dim)
+%       X   - input matrix
+%       n   - order
+%       dim - 1: inter frame, 2: intra frame
+%
 %   'dif1_h'            1st order difference in horizontal direction             Qi,j - Qi,j+1
 %   'dif1_v'            1st order difference in vertical direction               Qi,j - Qi+1,j
 %   'dif2_h'            2nd order difference in horizontal direction             Qi,j - 2 * Qi,j+1 + Qi,j+2

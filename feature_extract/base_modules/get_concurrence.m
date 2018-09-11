@@ -11,6 +11,8 @@
 
 function concurence_matrix = get_concurrence(matrix, T, direction, order, level)
 
+
+
 % default parameters
 if ~exist('T', 'var') || isempty(T)
     T = 15;
@@ -39,11 +41,10 @@ gap = maximum - minimum + 1;
 if level > gap
     level = gap;
 end
-    
 
 % get offset according to direction
 directions = [0, 45, 90, 135];
-offsets = [0, order;order,order;order,0;order, -order];
+offsets = [0, order;order, order;order, 0;order, -order];
 offset = zeros(1, 2);
 index = find(directions == direction);
 if isempty(index)

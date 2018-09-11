@@ -15,9 +15,9 @@ matrix_abs_dif2_v = pre_process_matrix(matrix, 'abs_dif2_v');
 matrix_abs_dif2_h = pre_process_matrix(matrix, 'abs_dif2_h');
 
 feature1 = get_point_block_markov(matrix, T);
-feature3 = get_point_block_markov(matrix_dif1_v, T);
-feature4 = get_point_block_markov(matrix_abs_dif1_h, T);
-feature5 = get_point_block_markov(matrix_abs_dif2_v, T);
-feature6 = get_point_block_markov(matrix_abs_dif2_h, T);
+feature2 = get_point_block_markov(matrix_dif1_v, T);
+feature3 = get_point_block_markov(matrix_abs_dif1_h, T);
+feature4 = get_point_block_markov(matrix_abs_dif2_v, T);
+feature5 = get_point_block_markov(matrix_abs_dif2_h, T);
 
-feature = [feature1;feature2;feature3;feature4;feature5;feature6];
+feature = [feature1;feature2;feature3;feature4;feature5];
