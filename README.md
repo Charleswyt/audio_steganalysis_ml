@@ -1,14 +1,20 @@
-# audio_steganalysis_ml
-Audio steganalysis via some traditional methods
+# Audio Steganalysis via Machine Learning
+Audio steganalysis via methods of machine learning.
 @Author: Charles_wyt
+@ Email: wangyuntao2@iie.ac.cn <br>
+Hope we can have a happy communication.
 
-## files
+This project is a machine learning implementation of recent work for audio steganalysis, you can also design your own algoritm via this platform.
+
+## Files
 ID | File | Function 
-:-:| :-:  | :-: 
-01 | application     | audio steganalysis
-02 | batch_script    | some batch scripts for feature extraction, training and test
-03 | feature_extract | feature extraction
+:-:| :-:  | :-:
+01 | application     | audio steganalysis and steganographied find
+02 | batch_script    | all batch scripts for feature extraction, training, test and so on
+03 | feature_extract | all scripts for feature extraction
 04 | train_test      | svm and ensemble classifier
 05 | utils			 | some basic tools such as get files name and get files list
 
-## features
+## How to use
+1. Run **setup.m** and complete environmental configuration
+2. Run 
