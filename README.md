@@ -1,6 +1,6 @@
 # Audio Steganalysis via Machine Learning
-Audio steganalysis via methods of machine learning.
-@Author: Charles_wyt
+Audio steganalysis via methods of machine learning.<br>
+@ Author: Charles_wyt<br>
 @ Email: wangyuntao2@iie.ac.cn <br>
 Hope we can have a happy communication.
 
