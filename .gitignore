@@ -5,7 +5,7 @@
 *.ini
 *.mp3
 *.wav
-*.exe
+!*.exe
 QMDCT
 
 !*.bat
