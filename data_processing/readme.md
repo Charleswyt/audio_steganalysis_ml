@@ -9,7 +9,7 @@ ID      |   File                    |   Function
 4       |   BatchRename.exe         |   an *.exe for file rename in batch
 
 ### Procedure of data processing
-1. samples make
+1. samples making
 2. samples check (bitrate, file size, embedding rate)
 3. QMDCT extraction
 4. train and test split

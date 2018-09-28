@@ -9,11 +9,12 @@ This project is a machine learning implementation of recent work for audio stega
 ## Files
 ID | File | Function 
 :-:| :-:  | :-:
-01 | application     | audio steganalysis and steganographied find
-02 | batch_script    | all batch scripts for feature extraction, training, test and so on
-03 | feature_extract | all scripts for feature extraction
-04 | train_test      | svm and ensemble classifier
-05 | utils			 | some basic tools such as get files name and get files list
+ 1 | application     | audio steganalysis and steganographied find
+ 2 | batch_script    | all batch scripts for feature extraction, training, test and so on
+ 3 | data_processing | tools which are used for QMDCT coefficients extraction and dataset build
+ 4 | feature_extract | all scripts for feature extraction
+ 5 | train_test      | svm and ensemble classifier
+ 6 | utils			 | some basic tools such as get files name and get files list
 
 ## How to use
 1. Run **setup.m** and complete environmental configuration
