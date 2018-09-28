@@ -18,4 +18,6 @@ ID | File | Function
 
 ## How to use
 1. Run **setup.m** and complete environmental configuration
-2. Run 
+2. For QMDCT extraction, run data_processing/batch_script/**QMDCT_extraction_batch.bat**
+3. For feature extraction, run matlab scripts of batch_script/**feature_extraction_batch.m**
+4. for SVM train and test, run matlab scripts of batch_script/**run_training.m**

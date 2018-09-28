@@ -8,3 +8,7 @@
 *.exe
 *.bat
 QMDCT
+
+!stego_*.txt
+!bird.mp3
+!stego_info_full.txt
