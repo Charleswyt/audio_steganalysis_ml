@@ -6,9 +6,11 @@
 *.mp3
 *.wav
 !*.exe
-QMDCT
+rm.bat
 
-!*.bat
+!files_move_batch.bat
+!QMDCT_extraction_batch.bat
+!train_test_split_batch.bat
 !stego_*.txt
 !bird.mp3
 !stego_info_full.txt
