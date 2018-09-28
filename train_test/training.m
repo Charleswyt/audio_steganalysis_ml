@@ -50,7 +50,11 @@ if ~exist('svm_params', 'var') || isempty(svm_params)
     end
 end
 
-model_files_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\models';   % model files dir
+% model files dir
+model_files_dir = 'models';
+if ~exist(model_files_dir, 'file')
+    mkdir(model_files_dir);
+end
 
 sample_num_cover = size(cover_feature, 1);                                  % the number of cover samples
 sample_num_stego = size(stego_feature, 1);                                  % the number of stego samples

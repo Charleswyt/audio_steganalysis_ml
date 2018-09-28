@@ -1,15 +1,15 @@
-%% extract QMDCT coefficients in batch
-% - QMDCTs = qmdct_extract_batch(audio_files_path, QMDCT_num, audio_nums, del_flag)
+%% extract QMDCT coefficients in batch (load txt files)
+% - QMDCTs = qmdct_extraction_batch1(text_files_path, QMDCT_num, text_nums)
 % - Variable:
 % ------------------------------------------input
-% text_files_path       audio files path
+% text_files_path       text files path
 % QMDCT_num             the number of QMDCT coeffcients, default is 576
-% audio_nums            the number of audio files to be processed
+% text_nums             the number of QMDCT coefficients matrix files
 % -----------------------------------------output
 % QMDCTs                QMDCt matrix, size(QMDCTs) = QMDCT_num * QMDCT_num * N
 % N is the number of files to be processed
 
-function QMDCTs = qmdct_extract_batch(text_files_path, QMDCT_num, text_nums)
+function QMDCTs = qmdct_extraction_batch1(text_files_path, QMDCT_num, text_nums)
 
 [files_list, file_num] = get_files_list(text_files_path, 'txt');
 

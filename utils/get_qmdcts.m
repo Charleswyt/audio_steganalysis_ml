@@ -22,11 +22,11 @@ end
 path_length = length(audio_file_path);
 wav_file_path = strcat(audio_file_path(1:path_length - 3), 'wav');
 txt_file_path = strcat(audio_file_path(1:path_length - 3), 'txt');
-command = ['lame_qmdct.exe', ' ', audio_file_path, ' ', ' -stratind 0', ' ', '-framenum ', str(frame_num), ' ', '-coeffnum 576 --decode'];
+command = ['lame_qmdct.exe', ' ', audio_file_path, ' ', ' -stratind 0', ' ', '-framenum ', num2str(frame_num), ' ', '-coeffnum 576 --decode'];
 system(command);
 
 QMDCT = load(txt_file_path);
 command_del = ['del', ' ', wav_file_path, ' ', txt_file_path];
 system(command_del);
 
-QMDCT = QMDCT(1:4*frame_num, coeff_num);
+QMDCT = QMDCT(1:4*frame_num, 1:coeff_num);

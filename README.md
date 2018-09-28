@@ -17,7 +17,12 @@ ID | File | Function
  6 | utils			 | some basic tools such as get files name and get files list
 
 ## How to use
+### separation
 1. Run **setup.m** and complete environmental configuration
 2. For QMDCT extraction, run data_processing/batch_script/**QMDCT_extraction_batch.bat**
 3. For feature extraction, run matlab scripts of batch_script/**feature_extraction_batch.m**
 4. for SVM train and test, run matlab scripts of batch_script/**run_training.m**
+
+### Integration
+1. Run **setup.m** and complete environmental configuration
+2. Run **run_script1.m** or **run_script2.m**
