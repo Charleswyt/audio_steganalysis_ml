@@ -13,15 +13,16 @@ ID | File | Function
  2 | batch_script    | all batch scripts for feature extraction, training, test and so on
  3 | data_processing | tools which are used for QMDCT coefficients extraction and dataset build
  4 | feature_extract | all scripts for feature extraction
- 5 | train_test      | svm and ensemble classifier
- 6 | utils			 | some basic tools such as get files name and get files list
+ 5 | plot            | scripts for figure plot
+ 6 | train_test      | svm and ensemble classifier
+ 7 | utils			 | some basic tools such as get files name and get files list
 
 ## How to use
 ### separation
 1. Run **setup.m** and complete environmental configuration
-2. For QMDCT extraction, run data_processing/batch_script/**QMDCT_extraction_batch.bat**
+2. For QMDCT extraction, run data_processing/batch_script/**QMDCT_extraction_batch1.bat** or **QMDCT_extraction_batch2.bat**
 3. For feature extraction, run matlab scripts of batch_script/**feature_extraction_batch.m**
-4. for SVM train and test, run matlab scripts of batch_script/**run_training.m**
+4. for SVM train and test, run matlab scripts of train_test/**training.m**
 
 ### Integration
 1. Run **setup.m** and complete environmental configuration
