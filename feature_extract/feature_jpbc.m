@@ -1,4 +1,4 @@
-%% Joint point-wise and multi-scale bolck-wise correlations (extraction) features
+%% JPBC(Wang-Information Sciences)
 % - feature = feature_jpbc(matrix, T)
 % - Variable:
 % ------------------------------------------input
@@ -8,6 +8,10 @@
 % feature               feature vector
 
 function feature = feature_jpbc(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 5;
+end
 
 matrix_dif1_v = pre_process_matrix(matrix, 'dif1_v');
 matrix_abs_dif1_h = pre_process_matrix(matrix, 'abs_dif1_h');

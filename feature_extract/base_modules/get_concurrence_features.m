@@ -54,4 +54,5 @@ denominator2 = sum(concurrence_y .* (index - sum(index .* concurrence_y)).^2);
 
 features(12) = numerator / denominator1 / denominator2;
 
+features = features(:);
 end

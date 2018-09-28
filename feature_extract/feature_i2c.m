@@ -1,4 +1,4 @@
-%% Wang-Markov
+%% I2C(Wang-CIHW2018)
 % - feature = feature_wang(matrix, T)
 % - Variable:
 % ------------------------------------------input
@@ -7,7 +7,11 @@
 % -----------------------------------------output
 % feature               feature vector
 
-function feature = feature_wang(matrix, T)
+function feature = feature_i2c(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 3;
+end
 
 matrix_abs = pre_process_matrix(matrix, 'dif1_v');
 

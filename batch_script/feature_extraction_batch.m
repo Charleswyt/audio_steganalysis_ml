@@ -6,6 +6,7 @@
 % matrixs           QMDCT coefficients matrix
 %                       size(matrix) * N, N is the total number of samples
 % feature_type      type of extracted feature
+% option: ADOPT(Jin), MDI2(Ren), JPBC(Wang-IS), I2C(Wang-CIHW), D2MA(Qiao), Occurance(Yan)
 % T                 threshold value
 % numbers           the number of audio files to be processed
 % -----------------------------------------output
@@ -16,7 +17,21 @@ function features = feature_extraction_batch(matrixs, feature_type, T, numbers)
 total_number = size(matrixs, 3);
 
 if ~exist('T', 'var') || isempty(T)
-    T = 3;
+    if strcmp(feature_type, 'ADOTP')
+        T = 6;
+    elseif strcmp(feature_type, 'MDI2')
+        T = 4;
+    elseif strcmp(feature_type, 'I2C')
+        T = 3;
+    elseif strcmp(feature_type, 'JPBC')
+        T = 5;
+    elseif strcmp(feature_type, 'D2MA')
+        T = 4;
+    elseif strcmp(feature_type, 'Co-Occurrence')
+        T = 15;
+    else
+        T = 5;
+    end
 end
 
 if ~exist('numbers', 'var') || isempty(numbers)

@@ -1,5 +1,5 @@
 %% Yan-Concurrence for MP3 steganalysis
-% - feature = feature_yan(matrix, T)
+% - feature = feature_occurance(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,11 @@
 % -----------------------------------------output
 % features              feature vector
 
-function features = feature_yan(matrix, T)
+function features = feature_occurance(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 15;
+end
 
 concurrence_matrix_0 = get_concurrence(matrix, T, 0);
 concurrence_matrix_45 = get_concurrence(matrix, T, 45);
@@ -19,6 +23,6 @@ features2 = get_concurrence_features(concurrence_matrix_45);
 features3 = get_concurrence_features(concurrence_matrix_90);
 features4 = get_concurrence_features(concurrence_matrix_135);
 
-features = [features1,features2,features3,features4];
+features = [features1;features2;features3;features4];
 
 end

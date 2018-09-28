@@ -1,5 +1,5 @@
-%% Ren-NAJD
-% - features = feature_ren(matrix, T)
+%% MDI2 (Ren)
+% - features = feature_mdi2(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,11 @@
 % -----------------------------------------output
 % feature               feature vector
 
-function features = feature_ren(matrix, T)
+function features = feature_mdi2(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 4;
+end
 
 %% the prr-processing of QMDCT matrix
 matrix_intra_dif1 = pre_process_matrix(matrix, 'dif1_h');                   % 1st col difference, M(r, c + 1) - M(r, c)

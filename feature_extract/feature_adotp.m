@@ -1,5 +1,5 @@
-%% Jin-Markov
-% - features = feature_jin(matrix, T)
+%% ADOTP(Jin)
+% - features = feature_adotp(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,11 @@
 % -----------------------------------------output
 % feature               feature vector
 
-function features = feature_jin(matrix, T)
+function features = feature_adotp(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 6;
+end
 
 matrix_abs_dif1 = pre_process_matrix(matrix, 'abs_dif1_v');
 

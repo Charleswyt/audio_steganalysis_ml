@@ -1,5 +1,5 @@
 %% Qiao features for MP3 steganalysis
-% - feature = feature_qiao(matrix, T)
+% - feature = feature_d2ma(matrix, T)
 % - Variable:
 % ------------------------------------------input
 % matrix                QMDCT matrix
@@ -7,7 +7,11 @@
 % -----------------------------------------output
 % features              feature vector
 
-function features = feature_qiao(matrix, T)
+function features = feature_d2ma(matrix, T)
+
+if ~exist('T', 'var') || isempty(T)
+    T = 4;
+end
 
 [~, width] = size(matrix);
 subband_num = floor(width / 18);

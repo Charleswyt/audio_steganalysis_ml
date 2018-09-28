@@ -59,20 +59,20 @@ fnr = zeros(1, 10);
 acc = zeros(1, 10);
 
 for i = 1:10
-    merge = shuffle(merge);                                                     % data shuffle
+    merge = shuffle(merge);                                                 % data shuffle
 
-    data  = merge(1:100, 1:feature_dimension);                                      % training data
-    label = merge(1:100, feature_dimension+1);                                      % training label
+    data  = merge(1:100, 1:feature_dimension);                              % training data
+    label = merge(1:100, feature_dimension+1);                              % training label
     predict = libsvmpredict(label, data, model, '-b 1');
 
-    FP = sum(label == -1 & predict ==  1);                                      % False Positive
-    FN = sum(label ==  1 & predict == -1);                                      % False Negative
-    TP = sum(label ==  1 & predict ==  1);                                      % True  Positive
-    TN = sum(label == -1 & predict == -1);                                      % True  Positive
+    FP = sum(label == -1 & predict ==  1);                                  % False Positive
+    FN = sum(label ==  1 & predict == -1);                                  % False Negative
+    TP = sum(label ==  1 & predict ==  1);                                  % True  Positive
+    TN = sum(label == -1 & predict == -1);                                  % True  Positive
 
-    fpr(i) = FP / (FP + TN);                                                       % False Positive Rate
-    fnr(i) = FN / (TP + FN);                                                       % False Negative Rate
-    acc(i) = 1 - ((fpr(i) + fnr(i)) / 2);                                                % Accuracy
+    fpr(i) = FP / (FP + TN);                                                % False Positive Rate
+    fnr(i) = FN / (TP + FN);                                                % False Negative Rate
+    acc(i) = 1 - ((fpr(i) + fnr(i)) / 2);                                   % Accuracy
 end
 
 FPR = mean(fpr);
