@@ -7,6 +7,7 @@ QMDCT_files_path_stego = '';
 QMDCT_matrices_cover = qmdct_extraction_batch2(QMDCT_files_path_cover, QMDCT_num, files_num);
 QMDCT_matrices_stego = qmdct_extraction_batch2(QMDCT_files_path_stego, QMDCT_num, files_num);
 
+%% feature extraction
 % feature type: ADOPT(Jin), MDI2(Ren), JPBC(Wang-IS), I2C(Wang-CIHW), D2MA(Qiao), Occurance(Yan)
 feature_type = 'ADOPT';
 feature_cover = feature_extraction_batch(QMDCT_matrices_cover, feature_type);
