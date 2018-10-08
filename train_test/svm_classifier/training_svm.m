@@ -1,6 +1,6 @@
 %% training
-% - [result, prob, model, predict, ground_truth] = ...
-%      training(cover_feature, stego_feature, percent, model_file_name, seek_best_params, svm_params, is_rewrite)
+% - [result, prob, model] = training_svm(cover_feature, stego_feature, percent, 
+%       model_file_name, seek_best_params, svm_params, is_rewrite)
 % - Variable:
 %------------------------------------------input
 % cover_feature         the feature of cover samples
@@ -18,11 +18,9 @@
 %   svm_params          svm params of current model
 % prob                  probability estimates
 % model                 svm model
-% predict               predictal label
-% ground_truth          real label
 
-function [result, prob, model, predict, ground_truth] ...
-    = training(cover_feature, stego_feature, percent, model_file_name, seek_best_params, svm_params, is_rewrite)
+function [result, prob, svm_model] ...
+    = training_svm(cover_feature, stego_feature, percent, model_file_name, seek_best_params, svm_params, is_rewrite)
 
 %default parameters
 if ~exist('percent', 'var') || isempty(percent)
@@ -51,7 +49,7 @@ if ~exist('svm_params', 'var') || isempty(svm_params)
 end
 
 % model files dir
-model_files_dir = 'models';
+model_files_dir = './models';
 if ~exist(model_files_dir, 'file')
     mkdir(model_files_dir);
 end
@@ -77,12 +75,10 @@ test_data   = merge(train_set_number+1:end, 1:feature_dimension);           % te
 test_label  = merge(train_set_number+1:end, feature_dimension+1);           % test label
 
 %% SVM training
-model = libsvmtrain(train_label, train_data, svm_params);
+svm_model = libsvmtrain(train_label, train_data, svm_params);
 
 %% SVM validation
-[predict, ~, prob] = libsvmpredict(test_label, test_data, model, '-b 1');
-
-ground_truth  = test_label;
+[predict, ~, prob] = libsvmpredict(test_label, test_data, svm_model, '-b 1');
 
 FP = sum(test_label == -1 & predict ==  1);                                 % False Positive
 FN = sum(test_label ==  1 & predict == -1);                                 % False Negative
@@ -92,11 +88,6 @@ TN = sum(test_label == -1 & predict == -1);                                 % Tr
 FPR = FP / (FP + TN);                                                       % False Positive Rate
 FNR = FN / (TP + FN);                                                       % False Negative Rate
 ACC = 1 - ((FPR + FNR) / 2);                                                % Accuracy
-
-%% save the model file
-if strcmp(is_rewrite, 'True') == 1
-    save(model_file_name, 'model');
-end
 
 result.FPR = FPR;
 result.FNR = FNR;
@@ -109,14 +100,22 @@ else
     result.best_acc = mean(ACC);
 end
 
+%% save the model file
 model_file_path = fullfile(model_files_dir, model_file_name);
-save(model_file_path, 'model');
+
+if ~exist(model_file_path, 'file')
+    save(model_file_path, 'svm_model');
+elseif exist(model_file_path, 'file') && strcmp(is_rewrite, 'True') == 1
+    save(model_file_path, 'svm_model');
+else
+    fprintf('');
+end
 
 end_time = toc(start_time);
 fprintf('---------------------------------------------------\n');
 fprintf('Training\n');
 fprintf('Training set: %d%%, Test set: %d%%\n', percent*100, 100-percent*100);
 fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR*100, result.FNR*100, result.ACC*100);
-fprintf('The model file is saved as "%s"\n', model_file_name);
-fprintf('Feature loads completes, runtime: %.2fs\n', end_time);
+fprintf('The model file is saved as "%s"\n', model_file_path);
+fprintf('Runtime: %.2fs\n', end_time);
 fprintf('Current time: %s\n', datestr(now, 0));

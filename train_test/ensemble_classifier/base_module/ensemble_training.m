@@ -283,7 +283,7 @@ if ischar(settings.L)
             next_random_subspace = 0;
             return;
         end
-        if i == settings.max_number_base_learners,
+        if i == settings.max_number_base_learners
             % maximal number of base learners reached
             next_random_subspace = 0;
             TXT = ' (maximum reached)';
@@ -347,7 +347,7 @@ elseif minE_id == length(SEARCH.x)
                 SEARCH = add_gridpoints(SEARCH,SEARCH.x(end)+SEARCH.step*[-1 1]);
             else
                 SEARCH = add_gridpoints(SEARCH,SEARCH.x(end)-SEARCH.step);
-            end;
+            end
         end
     end
 elseif (minE_id == length(SEARCH.x)-1) ... % if lowest is the last but one
@@ -560,7 +560,11 @@ base_learner.w = sigCS\mu;
 [txt,warnid] = lastwarn(); %#ok<ASGLU>
 while strcmp(warnid,'MATLAB:singularMatrix') || (strcmp(warnid,'MATLAB:nearlySingularMatrix') && ~settings.ignore_nearly_singular_matrix_warning)
     lastwarn('');
-    if ~exist('counter','var'), counter=1; else counter = counter*5; end
+    if ~exist('counter','var')
+        counter=1;
+    else
+        counter = counter*5;
+    end
     sigCS = sigCS + counter*eps*eye(size(sigCS,1));
     base_learner.w = sigCS\mu;
     [txt,warnid] = lastwarn(); %#ok<ASGLU>

@@ -21,7 +21,7 @@
 ACC = 0;
 number = 10;
 for i = 1:number
-    result = training(feature_cover_128_jin, feature_stego_128_jin_01, 0.6);
+    result = training(feature_cover_128_jin, feature_stego_128_jin_05, 0.6);
     ACC = ACC + result.ACC;
 end
 
