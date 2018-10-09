@@ -41,9 +41,6 @@ else
     ACC = 0;
 end
 
-% fprintf('feature type: %s\n', feature_type);
-% fprintf('FPR: %4.2f%%, FNR: %4.2f%%, ACC: %4.2f%%\r\n', 100*result.FPR, 100*result.FNR, 100*result.ACC);
-
 ACC_average = ACC_sum / times;
 fprintf('feature type: %s\n', feature_type);
 fprintf('Average Accuracy: %4.2f%%\r\n', 100*ACC_average);

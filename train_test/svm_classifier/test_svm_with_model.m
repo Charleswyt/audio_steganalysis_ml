@@ -11,8 +11,6 @@
 %    FNR                False negative rate
 %    ACC                Accuracy
 % model                 model
-% predict_label         predictal label
-% ground_truth          real label
 
 function [result, error_id] = test_svm_with_model(cover_feature, stego_feature, model)
 

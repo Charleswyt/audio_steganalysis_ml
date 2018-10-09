@@ -14,9 +14,10 @@
 %   FPR                 False positive rate
 %   FNR                 False negative rate
 %   ACC                 Accuracy
+% prob                  probability estimates
 % trained_ensemble      Emseble training model
 
-function [result, trained_ensemble] = ...
+function [result, prob, trained_ensemble] = ...
     training_ensemble(cover_feature, stego_feature, percent, is_figure, model_file_name, model_files_dir, is_rewrite)
 
 %default parameters
@@ -70,6 +71,8 @@ TST_stego = stego_feature(testing_set,:);
 % Testing phase - we can conveniently test on cover and stego features separately
 test_results_cover = ensemble_testing(TST_cover,trained_ensemble);
 test_results_stego = ensemble_testing(TST_stego,trained_ensemble);
+
+prob = [test_results_cover.votes; test_results_stego];
 
 % Predictions: -1 stands for cover, +1 for stego
 false_alarms = sum(test_results_cover.predictions~=-1);

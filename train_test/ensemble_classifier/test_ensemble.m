@@ -10,6 +10,7 @@
 %    FPR                False positive rate
 %    FNR                False negative rate
 %    ACC                Accuracy
+% prob                  
 
 function result = test_ensemble(cover_feature, stego_feature, model_file_path, is_figure)
 

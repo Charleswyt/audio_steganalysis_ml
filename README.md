@@ -27,5 +27,5 @@ ID | File | Function
 
 ### Integration
 1. Run **setup.m** and complete environmental configuration
-2. Run **run_script1.m** or **run_script2.m** for training and validation
-3. Run **run_script3.m** for test (optional)
+2. Run **run_script_for_training1.m** or **run_script_for_training2.m** for training and validation
+3. Run **run_script_for_test.m** for test
