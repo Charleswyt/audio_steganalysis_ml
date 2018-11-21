@@ -16,7 +16,7 @@ try
     
     modification = diff(diff~=0);
     diff_length = length(modification);
-    time = 50 * (10 / 384);                                                 % ึก * ร๋ / ึก
+    time = 50 * (10 / 384);                                                 % frame * second / frame
     modification_percentage = diff_length / (fs * time);
 
     fprintf('relative embedding rate: %.2f%%\n', 100*modification_percentage);

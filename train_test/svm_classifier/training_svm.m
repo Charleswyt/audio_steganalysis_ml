@@ -78,8 +78,7 @@ test_label  = merge(train_set_number+1:end, feature_dimension+1);           % te
 svm_model = libsvmtrain(train_label, train_data, svm_params);
 
 %% SVM validation
-[predict, ~, prob] = libsvmpredict(test_label, test_data, svm_model, '-b 1');
-
+[predict, ~, prob] = libsvmpredict(test_label, test_data, svm_model, '-b 1'); 
 FP = sum(test_label == -1 & predict ==  1);                                 % False Positive
 FN = sum(test_label ==  1 & predict == -1);                                 % False Negative
 TP = sum(test_label ==  1 & predict ==  1);                                 % True  Positive
@@ -119,3 +118,5 @@ fprintf('FPR: %.3f%%, FNR %.3f%%, ACC: %.3f%%\n', result.FPR*100, result.FNR*100
 fprintf('The model file is saved as "%s"\n', model_file_path);
 fprintf('Runtime: %.2fs\n', end_time);
 fprintf('Current time: %s\n', datestr(now, 0));
+
+end

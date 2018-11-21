@@ -72,7 +72,7 @@ TST_stego = stego_feature(testing_set,:);
 test_results_cover = ensemble_testing(TST_cover,trained_ensemble);
 test_results_stego = ensemble_testing(TST_stego,trained_ensemble);
 
-prob = [test_results_cover.votes; test_results_stego];
+prob = [test_results_cover.votes; test_results_stego.votes];
 
 % Predictions: -1 stands for cover, +1 for stego
 false_alarms = sum(test_results_cover.predictions~=-1);
