@@ -4,7 +4,8 @@
 """
 Created on 2018.08.21
 Finished on 2018.08.21
-@author: Wang Yuntao
+Modified on 
+@author: Yuntao Wang
 """
 
 import os
@@ -103,15 +104,12 @@ def make_folder(files_path):
 
 def train_test_split(files_path, percent_train=0.7, percent_validation=0.3):
     """
-        split the dataset into train, validation and test
-        :param files_path: path of files to be spilted
-        :param start_idx: start index of audio files
-        :param end_idx: end index of audio files
-        :param percent_train: percent of train data
-        :param percent_validation: percent of validation data
-        :param percent_test: percent of test data
-        :return:
-            NULL
+    split the dataset into train, validation and test
+    :param files_path: path of files to be split
+    :param percent_train: percent of train data
+    :param percent_validation: percent of validation data
+    :return:
+        NULL
     """
     if not percent_train + percent_validation == 1:
         print("The sum of percent of all split data is not 100%, please try again.")
@@ -153,17 +151,17 @@ def train_test_split(files_path, percent_train=0.7, percent_validation=0.3):
 if __name__ == "__main__":
     params_num = len(sys.argv)
     if params_num == 2:
-        files_path = sys.argv[1]
-        train_test_split(files_path)
+        args_files_path = sys.argv[1]
+        args_train_test_split(args_files_path)
     elif params_num == 3:
-        files_path = sys.argv[1]
-        percent_train = float(sys.argv[2])
-        percent_validation = 1 - float(percent_train)
-        train_test_split(files_path, percent_train, percent_validation)
+        args_files_path = sys.argv[1]
+        args_percent_train = float(sys.argv[2])
+        args_percent_validation = 1 - float(percent_train)
+        train_test_split(args_files_path, args_percent_train, args_percent_validation)
     elif params_num == 4:
-        files_path = sys.argv[1]
-        percent_train = float(sys.argv[2])
-        percent_validation = float(sys.argv[3])
-        train_test_split(files_path, percent_train, percent_validation)
+        args_files_path = sys.argv[1]
+        args_percent_train = float(sys.argv[2])
+        args_percent_validation = float(sys.argv[3])
+        train_test_split(args_files_path, args_percent_train, args_percent_validation)
     else:
         print("Please input the command as the format of {python train_test_split.py \"files_path\" \"percent_train\" \"percent_validation\"}")

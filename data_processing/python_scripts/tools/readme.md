@@ -1,6 +1,5 @@
 ### File description
-The usage of each encoder is shown as follows. 
-
+The usage of each encoder is shown as follows.
 Encoder             |   Description
 :-:      	        |    :-
 encode.exe          |   lame encoder
