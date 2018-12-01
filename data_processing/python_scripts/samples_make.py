@@ -566,5 +566,5 @@ if __name__ == "__main__":
     # cover_make(wav_audio_files_path, "E:/Myself/2.database/3.cover/cover_10s/256", "256", cover_types="lame", start_idx=None, end_idx=None)
     # cover_make(wav_audio_files_path, "E:/Myself/2.database/3.cover/cover_10s/320", "320", cover_types="lame", start_idx=None, end_idx=None)
 
-    # stego_make_eecs_batch(wav_audio_files_path, mp3_audio_stego_files_path, frame_num="384", embed=embedding_file_path, start_idx=0, end_idx=20000)
-    stego_make_hcm_batch(wav_audio_files_path, mp3_audio_stego_files_path, frame_num="50", embed=embedding_file_path_backup, start_idx=0, end_idx=10000)
+    stego_make_eecs_batch(wav_audio_files_path, mp3_audio_stego_files_path, frame_num="384", embed=embedding_file_path, start_idx=0, end_idx=None)
+    # stego_make_hcm_batch(wav_audio_files_path, mp3_audio_stego_files_path, frame_num="50", embed=embedding_file_path_backup, start_idx=0, end_idx=10000)

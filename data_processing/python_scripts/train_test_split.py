@@ -120,19 +120,19 @@ def train_test_split(files_path, percent_train=0.7, percent_validation=0.3):
         train_validation_num = files_num - data_num_test
         
         data_num_train = int(train_validation_num * percent_train)
-        data_num_valiadation = int(train_validation_num * percent_validation)
+        data_num_validation = int(train_validation_num * percent_validation)
         
         # split the dataset
         files_list_train = files_list[:data_num_train]
         del files_list[:data_num_train]
 
-        files_list_validation = files_list[:data_num_valiadation]
-        del files_list[:data_num_valiadation]
+        files_list_validation = files_list[:data_num_validation]
+        del files_list[:data_num_validation]
 
         files_list_test = files_list[:data_num_test]
         del files_list[:data_num_test]
 
-        # mkdir
+        # make dir
         files_path_train = fullfile(files_path, "train")
         files_path_validation = fullfile(files_path, "validation")
         files_path_test = fullfile(files_path, "test")
