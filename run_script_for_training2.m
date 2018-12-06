@@ -3,7 +3,7 @@ QMDCT_files_path_cover = '';
 QMDCT_files_path_stego = '';
 
 %% load QMDCT coefficients
-[QMDCT_num, files_num] = deal(576, 1000);
+[QMDCT_num, files_num] = deal(400, 2000);
 QMDCT_matrices_cover = qmdct_extraction_batch2(QMDCT_files_path_cover, QMDCT_num, files_num);
 QMDCT_matrices_stego = qmdct_extraction_batch2(QMDCT_files_path_stego, QMDCT_num, files_num);
 
