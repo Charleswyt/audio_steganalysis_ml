@@ -15,13 +15,13 @@ feature_type = 'MDI2';
 
 %% train and validation
 % classifier type: svm, ensemble_classifier
-classifier_type = 'svm';
-[percent, times, ACC_sum] = deal(0.6, 1, 0);
+classifier_type = 'ensemble_classifier';
+[percent, times, ACC_sum] = deal(0.6, 10, 0);
 
 if strcmp(classifier_type, 'svm')
     try
         for i = 1:times
-            [result, model] = training_svm(feature_cover, feature_stego, percent);
+            [result, model] = training_svm(feature_cover, feature_cover, percent);
             ACC_sum = ACC_sum + result.ACC;
         end
     catch

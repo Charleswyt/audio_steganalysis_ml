@@ -1,10 +1,20 @@
-bitrates = [128, 320];
+%% hyper parameters
+bitrates = [128, 192, 256, 320];
 widths = [2, 3, 4, 5];
 feature_types = {'ADOTP', 'MDI2', 'JPBC'};
-fp=fopen('EECS_results_EECS.txt','a');
-
 [QMDCT_num, files_num] = deal(400, 2000);
+classifier_type = 'ensemble_classifier';
+[percent, times, ACC_sum] = deal(0.6, 10, 0);
 
+%% file for results saving
+time_stamp_format = '_yyyy_mm_dd_HH_MM_SS';
+time_stamp = datestr(now, time_stamp_format);
+results_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\results\';
+if ~exist(results_dir, 'file') mkdir(results_dir); end                      %#ok<SEPEX>
+result_file_path = fullfile(results_dir, strcat('EECS_results', time_stamp, '.txt'));
+fp = fopen(result_file_path, 'a');
+
+%% QMDCT coefficients matrices
 cover_files_dir = 'E:\Myself\2.database\3.cover\cover_10s\';
 stego_files_dir = 'E:\Myself\2.database\4.stego\EECS\';
 
@@ -27,9 +37,6 @@ for b = 1:length(bitrates)
 
            %% train and validation
             % classifier type: svm, ensemble_classifier
-            classifier_type = 'ensemble_classifier';
-            [percent, times, ACC_sum] = deal(0.6, 50, 0);
-
             if strcmp(classifier_type, 'svm')
                 try
                     for i = 1:times
