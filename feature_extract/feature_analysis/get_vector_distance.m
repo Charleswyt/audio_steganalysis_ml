@@ -45,7 +45,7 @@ elseif strcmp(distance_type, 'Std_Euclidean') || (isnumeric(distance_type) && di
     vector2_norm = (vector2 - mean_vector2) / std_vector2;
     distance = sqrt(sum((vector1_norm - vector2_norm).^2));
 elseif strcmp(distance_type, 'Cosine') || (isnumeric(distance_type) && distance_type == 6)
-    distance = sum(vector1 .* vector2) / sum(vector1.^2) / sum(vector2.^2);
+    distance = sum(vector1 .* vector2) / sqrt(sum(vector1.^2)) / sqrt(sum(vector2.^2));
 elseif strcmp(distance_type, 'Pearson') || (isnumeric(distance_type) && distance_type == 7)
     mean_vector1 = mean(vector1);mean_vector2 = mean(vector2);
     vector1_new = vector1 - mean_vector1;

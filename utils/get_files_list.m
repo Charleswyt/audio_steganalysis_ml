@@ -22,10 +22,14 @@ files_list_struct = dir(fullfile(files_path, appendix));
 files_num = length(files_list_struct);
 files_list = cell(files_num, 1);
 
+count = 0;
 for i = 1 : files_num
     files_list{i} = files_list_struct(i).name;
+    fprintf(repmat('\b', 1, count));
+    count = fprintf('File: %s', files_list{i});
 end
 
+fprintf('\n');
 fprintf('The number of files: %d\n', files_num);
 
 end

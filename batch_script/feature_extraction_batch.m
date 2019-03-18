@@ -40,11 +40,15 @@ end
 
 start_time = tic;
 
+count = 0;
 for i = 1:numbers
     matrix = matrixs(:,:,i);
     features(i,:) = feature_extraction(matrix, feature_type, T);            %#ok<AGROW>
+    fprintf(repmat('\b', 1, count));
+    count = fprintf('The feature extraction of %d-th file completes.', i);
 end
 
 end_time = toc(start_time);
 
+fprintf('\n');
 fprintf('%s feature extraction completes, T = %d, runtime: %.2fs\n', feature_type, T, end_time);

@@ -1,18 +1,18 @@
 %% hyper parameters
 bitrates = [128, 192, 256, 320];
-widths = [2, 3, 4, 5];
+widths = [2, 3, 4, 5, 6, 7];
 feature_types = {'ADOTP', 'MDI2', 'JPBC'};
 [QMDCT_num, files_num] = deal(400, 2000);
 classifier_type = 'ensemble_classifier';
-[percent, times, ACC_sum] = deal(0.6, 10, 0);
+[percent, times] = deal(0.6, 10);
 
 %% file for results saving
 time_stamp_format = '_yyyy_mm_dd_HH_MM_SS';
 time_stamp = datestr(now, time_stamp_format);
-results_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\results\';
+results_dir = 'E:\Myself\1.source_code\audio_steganalysis_ml\results';
 if ~exist(results_dir, 'file') mkdir(results_dir); end                      %#ok<SEPEX>
 result_file_path = fullfile(results_dir, strcat('EECS_results', time_stamp, '.txt'));
-fp = fopen(result_file_path, 'a');
+fp = fopen(result_file_path, 'w');
 
 %% QMDCT coefficients matrices
 cover_files_dir = 'E:\Myself\2.database\3.cover\cover_10s\';
@@ -37,11 +37,14 @@ for b = 1:length(bitrates)
 
            %% train and validation
             % classifier type: svm, ensemble_classifier
+            [ACC_sum,FPR_sum, FNR_sum] = deal(0, 0, 0);
             if strcmp(classifier_type, 'svm')
                 try
                     for i = 1:times
-                        [result, model] = training_svm(feature_cover, feature_stego, 0.6);
+                        [result, model] = training_svm(feature_cover, feature_stego, percent);
                         ACC_sum = ACC_sum + result.ACC;
+                        FPR_sum = FPR_sum + result.FPR;
+                        FNR_sum = FNR_sum + result.FNR;
                     end
                 catch
                     fprintf('SVM Training Error.\n');
@@ -49,21 +52,26 @@ for b = 1:length(bitrates)
             elseif strcmp(classifier_type, 'ensemble_classifier')
                 try
                     for i = 1:times
-                        [result, trained_ensemble] = training_ensemble(feature_cover, feature_stego, 0.6);
+                        [result, trained_ensemble] = training_ensemble(feature_cover, feature_stego, percent);
                         ACC_sum = ACC_sum + result.ACC;
+                        FPR_sum = FPR_sum + result.FPR;
+                        FNR_sum = FNR_sum + result.FNR;
                     end
                 catch
                     fprintf('Ensemble Training Error.\n');
                 end
             else
                 fprintf('Error in classifier selection.\n');
-                ACC = 0;
             end
 
             ACC_average = ACC_sum / times;
+            FPR_average = FPR_sum / times;
+            FNR_average = FNR_sum / times;
             fprintf('feature type: %s\n', feature_type);
-            fprintf('Average Accuracy: %4.2f%%\r\n', 100*ACC_average);
-            fprintf(fp,'feature_type: %s, bitrate: %d, width: %d, Accuracy: %.2f\r\n', feature_type, bitrates(b), widths(w), 100*ACC_average);
+            fprintf('bitrate: %d, width: %d\n', bitrates(b), widths(w));
+            fprintf('%d-times Average FPR: %4.2f%%, FNR: %4.2f%%, ACC: %4.2f%%\r\n', times, 100*FPR_average, 100*FNR_average, 100*ACC_average);
+            fprintf(fp,'feature_type: %s, bitrate: %d, width: %d, FPR: %.2f%%, FNR: %.2f%%, ACC: %.2f%%\r\n', ...
+                feature_type, bitrates(b), widths(w), 100*FPR_average, 100*FNR_average, 100*ACC_average);
         end
     end
 end

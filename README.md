@@ -18,14 +18,19 @@ ID | File | Function
  7 | utils			        | some basic tools such as get files name and get files list
 
 ## How to use
-### Separation
-1. Run **setup.m** and complete environmental configuration
-2. For **QMDCT extraction**, run data_processing/batch_script/**QMDCT_extraction_batch1.bat** or **QMDCT_extraction_batch2.bat**
-3. For **feature extraction**, run matlab scripts of batch_script/**feature_extraction_batch.m**
-4. For **training and validation**, run matlab scripts of train_test/ensemble_classifier/**training_emsemble.m** or train_test/svm_classifier/**training_svm.m**
-5. For **test**, run matlab scripts of train_test/ensemble_classifier/**test_ensemble.m** or train_test/svm_classifier/**test_svm.m**
+### Single task
+#### Separation
+1. Run **setup.m** and complete environmental configuration.
+2. For **QMDCT extraction**, run data_processing/batch_script/**QMDCT_extraction_batch1.bat** or **QMDCT_extraction_batch2.bat**.
+3. For **feature extraction**, run matlab scripts of batch_script/**feature_extraction_batch.m**.
+4. For **training and validation**, run matlab scripts of train_test/ensemble_classifier/**training_emsemble.m** or train_test/svm_classifier/**training_svm.m**.
+5. For **test**, run matlab scripts of train_test/ensemble_classifier/**test_ensemble.m** or train_test/svm_classifier/**test_svm.m**.
 
-### Integration
-1. Run **setup.m** and complete **environmental configuration**
-2. Run **run_script_for_training1.m** or **run_script_for_training2.m** for **training and validation**
-3. Run **run_script_for_test.m** for **test**
+#### Integration
+1. Run **setup.m** and complete **environmental configuration**.
+2. Run **run_script_for_training1.m** or **run_script_for_training2.m** for **training and validation**.
+3. Run **run_script_for_test.m** for **test**.
+
+### Multiple tasks
+1. Run **setup.m** and complete **environmental configuration**.
+2. Run **run_script_for_experiments.m** or **run_script_for_experiments1.m**, and all results are writtten into a text file.

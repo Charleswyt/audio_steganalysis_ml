@@ -4,7 +4,7 @@ stego_method = {'MP3Stego', 'HCM', 'EECS'};
 feature_type = {'jin', 'ren', 'jpbc', 'wang'};
 T = [6, 4, 5, 3];
 
-QMDCT_num = 500;
+QMDCT_num = 450;
 text_nums = 1000;
 
 data_cover_mat_dir = 'E:\Myself\2.database\mtap\data_mat\cover';
