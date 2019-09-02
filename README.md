@@ -1,6 +1,6 @@
-# Audio Steganalysis via Machine Learning
+# Audio Steganalysis with Handcrafted Features Design (Statistical Machine Learning)
 Audio steganalysis via the methods of machine learning.<br>
-@ Author: Charles_wyt<br>
+@ Author: [Yuntao Wang (Charles_wyt)](http://www.escience.cn/people/wangyuntao/index.html)<br>
 @ Email: wangyuntao2@iie.ac.cn <br>
 Hope we can have a happy communication.
 
