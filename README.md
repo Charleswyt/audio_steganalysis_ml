@@ -1,10 +1,10 @@
 # Audio Steganalysis with Handcrafted Features Design (Statistical Machine Learning)
-Audio steganalysis via the methods of machine learning.<br>
+Audio steganalysis based on the agorithms of statisctical machine learning.<br>
 @ Author: [Yuntao Wang (Charles_wyt)](http://www.escience.cn/people/wangyuntao/index.html)<br>
 @ Email: wangyuntao2@iie.ac.cn <br>
 Hope we can have a happy communication.
 
-This project is a machine learning implementation of our recent work for audio steganalysis, and you can also design your own algoritm via this platform.
+This project is the implementation of our recent work for audio steganalysis based on statistical machine learning, and you can also design your own algoritm through this platform.
 
 ## Files
 ID | File | Function 
